@@ -13,7 +13,6 @@
         {%- set toc = toc(page.content, { class: "nav", list_number: page.toc.number, max_depth: page.toc.max_depth }) %}
         {%- set display_toc = toc.length > 1 and display_toc %}
       {%- endif %}
-
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           {{ __('sidebar.toc') }}
