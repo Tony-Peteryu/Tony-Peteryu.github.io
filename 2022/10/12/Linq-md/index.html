@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/tony-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/tony-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/tony-16x16.png">
+  <link rel="mask-icon" href="/images/tony.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+  <meta name="description" content="LINQ介绍什么是LINQLINQ是英文Language Integrated Query的缩写，中文译为语言集成查询 LINQ(语言集成查询)是C#、VB.NET以及F#中的统一查询语法，用以检索来自不同数据源和格式的数据。它集成在c#、VB以及F#语言中，从而消除了编程语言和数据库之间的不匹配，并为不同类型的数据源提供了一个单一的查询接口。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linq">
+<meta property="og:url" content="http://example.com/2022/10/12/Linq-md/index.html">
+<meta property="og:site_name" content="Tony&#39;s Blog">
+<meta property="og:description" content="LINQ介绍什么是LINQLINQ是英文Language Integrated Query的缩写，中文译为语言集成查询 LINQ(语言集成查询)是C#、VB.NET以及F#中的统一查询语法，用以检索来自不同数据源和格式的数据。它集成在c#、VB以及F#语言中，从而消除了编程语言和数据库之间的不匹配，并为不同类型的数据源提供了一个单一的查询接口。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c7059d53e12a48e0a4751e41915267b2.png">
+<meta property="article:published_time" content="2022-10-12T12:06:17.000Z">
+<meta property="article:modified_time" content="2022-10-12T12:09:03.345Z">
+<meta property="article:author" content="Tony">
+<meta property="article:tag" content="Linq">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/c7059d53e12a48e0a4751e41915267b2.png">
+
+<link rel="canonical" href="http://example.com/2022/10/12/Linq-md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linq | Tony's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tony's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">欢迎您的到来,阅读愉快</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/12/Linq-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tony.svg">
+      <meta itemprop="name" content="Tony">
+      <meta itemprop="description" content="不要停止奔跑,不要回顾来路,来路无可眷恋,值得期待的只有远方!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tony's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linq
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-12 20:06:17 / 修改时间：20:09:03" itemprop="dateCreated datePublished" datetime="2022-10-12T20:06:17+08:00">2022-10-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C#</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="LINQ介绍"><a href="#LINQ介绍" class="headerlink" title="LINQ介绍"></a>LINQ介绍</h3><h4 id="什么是LINQ"><a href="#什么是LINQ" class="headerlink" title="什么是LINQ"></a>什么是LINQ</h4><p>LINQ是英文Language Integrated Query的缩写，中文译为语言集成查询</p>
+<p>LINQ(语言集成查询)是C#、VB.NET以及F#中的统一查询语法，用以检索来自不同数据源和格式的数据。它集成在c#、VB以及F#语言中，从而消除了编程语言和数据库之间的不匹配，并为不同类型的数据源提供了一个单一的查询接口。</p>
+<span id="more"></span>
+
+<h4 id="LINQ的优势"><a href="#LINQ的优势" class="headerlink" title="LINQ的优势"></a>LINQ的优势</h4><ul>
+<li>熟悉的语言：C#，VB.NET，F#开发者无需学习额外的语法</li>
+<li>写更少的代码：与更传统的方法相比，LINQ减少了需要编写的代码量</li>
+<li>可读性更高：LINQ使代码更具可读性，因此其他开发人员可以轻松地理解和维护它</li>
+<li>标准化方式查询多个数据源：可以使用同样的LINQ语法查询多个数据源</li>
+<li>编译时查询的安全性：LINQ查询支持在编译时提供对象的类型检查</li>
+<li>智能感知的支持：LINQ为泛型集合提供了智能感知</li>
+<li>数据重塑：LINQ查询可以检索并返回不同类型的数据</li>
+</ul>
+<h3 id="LINQ标准查询操作符"><a href="#LINQ标准查询操作符" class="headerlink" title="LINQ标准查询操作符"></a>LINQ标准查询操作符</h3><h4 id="LINQ操作符之Where"><a href="#LINQ操作符之Where" class="headerlink" title="LINQ操作符之Where"></a>LINQ操作符之Where</h4><p>Where操作符(Linq扩展方法)基于给定的条件表达式过滤集合，并返回一个新的集合。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">### 查询订单中价格大于2000 且为线上的订单</span></span><br><span class="line"><span class="keyword">var</span> list = order.Where(e =&gt; e.Price &gt; <span class="number">2000</span>).Where(e =&gt; e.Source == <span class="string">&quot;线上&quot;</span>).ToList();</span><br></pre></td></tr></table></figure>
+<p><code>tips:</code>需要注意的是LINQ查询具有<code>延迟执行</code>的特性</p>
+<ul>
+<li>它是指查询操作并不是在查询运算符定义的时候执行，真正使用集合中的数据时才执行，例如遍历数据集合时调用MoveNext方法会触发查询操作</li>
+<li>当返回值为IEnumerable<TSource>、IEnumerable&lt;IGrouping&lt;TKey, TSource&gt;&gt;和IOrderedEnumerable<TSource>的时候，Linq为延迟执行。实际上上述三个返回值类型都实现了IEnumerable<T>(公开枚举数)这个接口，yield return的返回值就是IEnumerable<T>，所以，当Linq查询操作符的返回值为上述三个类型时，查询为延迟查询，其他为立即执行。</li>
+<li>如何让查询立即执行呢，可以使用LINQ内置所提供的转换操作的定义：ToArray(转换为数组)、ToDictionary(转换为字典)、ToList(转换为集合)</li>
+<li>在使用的时候要注意这个特性，避免重复查询出现</li>
+</ul>
+<h4 id="LINQ操作符之OfType"><a href="#LINQ操作符之OfType" class="headerlink" title="LINQ操作符之OfType"></a>LINQ操作符之OfType</h4><p>OfType操作符用于根据指定的类型过滤IEnumerable中的元素，它返回一个包含指定类型的IEnumerable<T>的子集合。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">### 从中筛选出类型为int类型的元素</span></span><br><span class="line"><span class="keyword">var</span> lists = <span class="keyword">new</span> List&lt;<span class="built_in">object</span>&gt; &#123; <span class="string">&quot;asdas&quot;</span>, <span class="string">&quot;asdadf&quot;</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">10.5</span>, <span class="number">15.45</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> result = lists.OfType&lt;<span class="built_in">string</span>&gt;().ToList();</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之OrderBy和OrderByDescending"><a href="#LINQ操作符之OrderBy和OrderByDescending" class="headerlink" title="LINQ操作符之OrderBy和OrderByDescending"></a>LINQ操作符之OrderBy和OrderByDescending</h4><p>在LINQ的查询语法中，OrderBy按升序或降序对集合的值进行排序。默认情况下，它按升序对集合进行排序，因为ascending关键字在这里是可选的。使用descending关键字对集合进行降序排序。</p>
+<p>在LINQ的方法语法中，OrderBy则只能按升序对集合的值进行排序，而OrderByDescending则按降序排序，并且OrderByDescending只适用于方法语法中。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">### 依据订单的价格升序排列</span></span><br><span class="line"><span class="keyword">var</span> result = list.OrderBy(e =&gt; e.Price).ToList();</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之ThenBy和ThenByDescending"><a href="#LINQ操作符之ThenBy和ThenByDescending" class="headerlink" title="LINQ操作符之ThenBy和ThenByDescending"></a>LINQ操作符之ThenBy和ThenByDescending</h4><p>OrderBy()方法根据指定的字段按升序对集合进行排序。在OrderBy之后使用ThenBy()方法对另一个字段上的集合按升序排序。LINQ首先根据OrderBy方法指定的主字段对集合进行排序，然后根据ThenBy方法指定的次字段对结果集合进行升序排序。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">### 先依据的价格升序排列，再根据订单创建时间降序排列</span></span><br><span class="line"><span class="keyword">var</span> result = list.OrderBy(e=&gt;e.Price).ThenByDescending(e=&gt;e.CreatedAt).ToList();</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之-GroupBy"><a href="#LINQ操作符之-GroupBy" class="headerlink" title="LINQ操作符之 GroupBy"></a>LINQ操作符之 GroupBy</h4><p>分组操作符根据给定的键创建一组元素。这个组包含在一个特殊类型的集合中，该集合实现了一个IGrouping&lt;TKey,TSource&gt;接口，其中TKey是一个键值，在这个键值上形成了组，而TSource是与分组键值匹配的元素集合。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">### 依据订单来源进行分组排序</span></span><br><span class="line"><span class="keyword">var</span> result = list.GroupBy(e=&gt;e.Source);</span><br><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> result)</span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(item.Key);</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> <span class="keyword">value</span> <span class="keyword">in</span> item)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(JsonConvert.SerializeObject(<span class="keyword">value</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同时可以依据多字段进行分组排序</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">### 依据订单及用户分组排序</span></span><br><span class="line"><span class="keyword">var</span> result = list.GroupBy(e=&gt;<span class="keyword">new</span> TypeA(e.Source,e.Customer)).ToList();</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之ToLookup"><a href="#LINQ操作符之ToLookup" class="headerlink" title="LINQ操作符之ToLookup"></a>LINQ操作符之ToLookup</h4><p>ToLookup操作符是一个扩展方法，它用于从源集合中提取一组键&#x2F;值对。在这里，结果集合中的每个元素都是一个通用的Lookup对象，该对象包含与该键匹配的键和子项。<br>LINQ方法语法中，ToLookup与GroupBy相同，唯一的区别是GroupBy的执行是延迟的，而ToLookup的执行是立即的。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = list.ToLookup(e=&gt;e.Source)</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之Join"><a href="#LINQ操作符之Join" class="headerlink" title="LINQ操作符之Join"></a>LINQ操作符之Join</h4><p>内部连接生成一个结果集，其中第一个集合的每个元素对于第二个集合中的每个匹配元素都出现一次。如果第一个集合中的元素在第二个集合中没有任何匹配的元素，那么它就不会出现在结果集中。<br>内连接仅用于从两个数据源返回匹配的元素，而从结果集中删除不匹配的元素，如图所示<br><img src="https://img-blog.csdnimg.cn/c7059d53e12a48e0a4751e41915267b2.png" alt="Linq内连接"></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = customers.                <span class="comment">// 1.外部数据源</span></span><br><span class="line">    Join(</span><br><span class="line">    addresses,                         <span class="comment">// 2.内部数据源</span></span><br><span class="line">    c =&gt; c.AddressId,                  <span class="comment">// 3.外部键选择器</span></span><br><span class="line">    e =&gt; e.Id,                         <span class="comment">// 4.内部键选择器</span></span><br><span class="line">    (customers, addresses) =&gt; <span class="keyword">new</span>      <span class="comment">// 5.期望返回的结果集选择器</span></span><br><span class="line">    &#123;</span><br><span class="line">        name = customers.Name,</span><br><span class="line">        province = addresses.Province,</span><br><span class="line">        city = addresses.City,</span><br><span class="line">        district = addresses.District,</span><br><span class="line">        street = addresses.Street</span><br><span class="line">    &#125;</span><br><span class="line">    ).ToList();</span><br></pre></td></tr></table></figure>
+<p>外部数据源中的外部键起到驱动作用，从内部中寻找匹配的数据，并按照结果集选择器中的去返回</p>
+<h4 id="LINQ操作符之GroupJoin"><a href="#LINQ操作符之GroupJoin" class="headerlink" title="LINQ操作符之GroupJoin"></a>LINQ操作符之GroupJoin</h4><p>GroupJoin基本上是用来生成分组数据结构的。来自第一个数据源的每个项都与来自第二个数据源的一组相关项配对</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> customers = FakeData.Customers;</span><br><span class="line"><span class="keyword">var</span> addresses = FakeData.Addresses;</span><br><span class="line"><span class="keyword">var</span> result = addresses.                <span class="comment">// 1.外部数据源</span></span><br><span class="line">    GroupJoin(</span><br><span class="line">    customers,                         <span class="comment">// 2.内部数据源</span></span><br><span class="line">    c =&gt; c.Id,                         <span class="comment">// 3.外部键选择器</span></span><br><span class="line">    e =&gt; e.AddressId,                  <span class="comment">// 4.内部键选择器</span></span><br><span class="line">    (addresses, customers) =&gt; <span class="keyword">new</span>      <span class="comment">// 5.期望返回的结果集选择器</span></span><br><span class="line">    &#123;</span><br><span class="line">        addresses,</span><br><span class="line">        customers</span><br><span class="line">    &#125;</span><br><span class="line">    ).ToList();</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之Select"><a href="#LINQ操作符之Select" class="headerlink" title="LINQ操作符之Select"></a>LINQ操作符之Select</h4><p>投影是用于从数据源中选择数据的一种机制。你可以选择与数据源相同形式的数据(即原始数据处于其原始状态)。还可以通过对数据执行一些操作来创建新的数据形式。<br>LINQ中的Select操作符也允许我们指定我们想要检索的属性，你是想检索所有的属性，还是一些你需要在Select操作符中指定的属性。标准的LINQ选择操作符也允许我们执行一些计算。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = orders.Select(e =&gt; e.Customer).ToList();</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之SelectMany"><a href="#LINQ操作符之SelectMany" class="headerlink" title="LINQ操作符之SelectMany"></a>LINQ操作符之SelectMany</h4><p>LINQ的SelectMany操作符是将序列的每个元素投影到IEnumerable<T>并将结果序列合并为一个序列。这意味着SelectMany操作符组合来自一系列结果的记录，然后将其转换为一个结果。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = petOwners</span><br><span class="line">        .SelectMany(petOwner =&gt; petOwner.Pets, (petOwner, petName) =&gt; <span class="keyword">new</span> &#123; petOwner.Name, petName &#125;).Where(e=&gt;e.petName.Contains(<span class="string">&quot;S&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之All"><a href="#LINQ操作符之All" class="headerlink" title="LINQ操作符之All"></a>LINQ操作符之All</h4><p>C#中LINQ的All操作符用于检查数据源的所有元素是否满足给定的条件。如果所有元素都满足条件，则返回true，否则返回false。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">### 判断数组中是否所有元素都大于20</span></span><br><span class="line"><span class="keyword">var</span> numbers = <span class="keyword">new</span>[] &#123; <span class="number">1</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">16</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">56</span>, <span class="number">80</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> areAllNumbersGreaterThan10 = numbers.All(x =&gt; x &gt; <span class="number">20</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之Any"><a href="#LINQ操作符之Any" class="headerlink" title="LINQ操作符之Any"></a>LINQ操作符之Any</h4><p>C#中LINQ的Any操作符用于检查数据源中是否至少有一个元素满足给定的条件。如果任何元素满足给定条件，则返回true，否则返回false。它也用于检查一个集合是否包含一些数据。这意味着它还检查集合的长度。如果它包含任何数据，则返回true，否则返回false。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">### 判断数组中是否存在元素大于20</span></span><br><span class="line"><span class="keyword">var</span> numbers = <span class="keyword">new</span>[] &#123; <span class="number">1</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">16</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">56</span>, <span class="number">80</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> areAllNumbersGreaterThan10 = numbers.All(x =&gt; x &gt; <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">### 判断集合中是否存在元素</span></span><br><span class="line">numbers.Any();</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之Contains"><a href="#LINQ操作符之Contains" class="headerlink" title="LINQ操作符之Contains"></a>LINQ操作符之Contains</h4><p>Contains操作符检查指定的元素是否存在于集合中，并返回一个布尔值。<br>Contains扩展方法有两个重载，第一个重载方法需要传入一个在集合中检索的值，第二个重载方法需要传入一个附加的IEqualityComparer参数来进行自定义的相等性比较器。</p>
+<p>Contains扩展方法只比较对象的引用，而不是对象的实际值。因此，为了比较student对象的值，需要通过实现IEqualityComparer接口创建一个类，该接口比较两个student对象的值并返回布尔值。</p>
+<h4 id="LINQ操作符之Aggregate"><a href="#LINQ操作符之Aggregate" class="headerlink" title="LINQ操作符之Aggregate"></a>LINQ操作符之Aggregate</h4><p>Aggregate具有三种重载</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TSource <span class="title">Aggregate</span>&lt;<span class="title">TSource</span>&gt;(<span class="params"><span class="keyword">this</span> IEnumerable&lt;TSource&gt; source, </span></span></span><br><span class="line"><span class="params"><span class="function">                                         Func&lt;TSource, TSource, TSource&gt; func</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TAccumulate <span class="title">Aggregate</span>&lt;<span class="title">TSource</span>, <span class="title">TAccumulate</span>&gt;(<span class="params"><span class="keyword">this</span> IEnumerable&lt;TSource&gt; source, </span></span></span><br><span class="line"><span class="params"><span class="function">                                         TAccumulate seed, </span></span></span><br><span class="line"><span class="params"><span class="function">                                         Func&lt;TAccumulate, TSource, TAccumulate&gt; func</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TResult <span class="title">Aggregate</span>&lt;<span class="title">TSource</span>, <span class="title">TAccumulate</span>, <span class="title">TResult</span>&gt;(<span class="params"><span class="keyword">this</span> IEnumerable&lt;TSource&gt; source, </span></span></span><br><span class="line"><span class="params"><span class="function">                                         TAccumulate seed, </span></span></span><br><span class="line"><span class="params"><span class="function">                                         Func&lt;TAccumulate, TSource, TAccumulate&gt; func, </span></span></span><br><span class="line"><span class="params"><span class="function">                                         Func&lt;TAccumulate, TResult&gt; resultSelector</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之Average"><a href="#LINQ操作符之Average" class="headerlink" title="LINQ操作符之Average"></a>LINQ操作符之Average</h4><p>LINQ的Average方法用于计算应用该方法的集合中的数值的平均值。这个Average方法可以返回可为空或不可为空的十进制、浮点或双精度值。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> numbers = <span class="keyword">new</span>[] &#123; <span class="number">20</span>, <span class="number">30</span>, <span class="number">50</span>, <span class="number">60</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> avg = numbers.Average();</span><br></pre></td></tr></table></figure>
+
+<h4 id="LINQ操作符之Count"><a href="#LINQ操作符之Count" class="headerlink" title="LINQ操作符之Count"></a>LINQ操作符之Count</h4><p>Count操作符用以返回集合中元素的数量或满足给定条件的元素的数量</p>
+<h4 id="LINQ操作符之Max、Min、Sum"><a href="#LINQ操作符之Max、Min、Sum" class="headerlink" title="LINQ操作符之Max、Min、Sum"></a>LINQ操作符之Max、Min、Sum</h4><p>LINQ的Max()方法用以返回集合中最大的数字元素。<br>Min操作符与Max操作符类似，只是Min用以返回集合中最小的数字元素。<br>LINQ的Max()方法用以计算集合中数值项的和。</p>
+<h4 id="LINQ操作符之元素操作符"><a href="#LINQ操作符之元素操作符" class="headerlink" title="LINQ操作符之元素操作符"></a>LINQ操作符之元素操作符</h4><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ElementAt</td>
+<td>返回集合中指定索引处的元素。</td>
+</tr>
+<tr>
+<td>ElementAtOrDefault</td>
+<td>返回集合中指定索引处的元素，如果索引超出范围则返回默认值。</td>
+</tr>
+<tr>
+<td>First</td>
+<td>返回集合的第一个元素，或满足条件的第一个元素。</td>
+</tr>
+<tr>
+<td>FirstOrDefault</td>
+<td>返回集合的第一个元素，或满足条件的第一个元素。如果索引超出范围，返回默认值。</td>
+</tr>
+<tr>
+<td>Last</td>
+<td>返回集合的最后一个元素，或满足条件的最后一个元素</td>
+</tr>
+<tr>
+<td>LastOrDefault</td>
+<td>返回集合的最后一个元素，或满足条件的最后一个元素。如果不存在这样的元素，则返回默认值。</td>
+</tr>
+<tr>
+<td>Single</td>
+<td>返回集合中的唯一元素，或满足条件的唯一元素。</td>
+</tr>
+<tr>
+<td>SingleOrDefault</td>
+<td>返回集合中的唯一元素，或满足条件的唯一元素。如果不存在这样的元素或集合不包含恰好一个元素，则返回默认值。</td>
+</tr>
+</tbody></table>
+<h4 id="LINQ操作符之集合操作符"><a href="#LINQ操作符之集合操作符" class="headerlink" title="LINQ操作符之集合操作符"></a>LINQ操作符之集合操作符</h4><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Distinct</td>
+<td>去掉集合的重复项</td>
+</tr>
+<tr>
+<td>Except</td>
+<td>返回两个集合的不同，第一个集合的元素不能出现在第二个集合中</td>
+</tr>
+<tr>
+<td>Intersect</td>
+<td>返回两个集合的交集，即元素同时出现在两个集合中</td>
+</tr>
+<tr>
+<td>Union</td>
+<td>返回两个序列中的唯一元素，这意味着出现在两个序列中的任何一个中的唯一元素</td>
+</tr>
+</tbody></table>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">### 去重</span></span><br><span class="line"><span class="keyword">var</span> numbers = <span class="keyword">new</span>[] &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> result = numbers.Distinct();</span><br><span class="line"></span><br><span class="line"><span class="meta">### 返回两个集合的差值</span></span><br><span class="line"><span class="keyword">var</span> numbers = <span class="keyword">new</span>[] &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> numbers2 = <span class="keyword">new</span>[] &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">11</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> result = numbers.Except(numbers2);</span><br><span class="line"></span><br><span class="line"><span class="meta">### 返回两个集合的交集</span></span><br><span class="line"><span class="keyword">var</span> result = numbers.Intersect(numbers2);</span><br><span class="line"></span><br><span class="line"><span class="meta">### 返回两个集合的并集</span></span><br><span class="line"><span class="keyword">var</span> result = numbers.Union(numbers2);</span><br></pre></td></tr></table></figure>
+<h4 id="LINQ操作符之切分操作符"><a href="#LINQ操作符之切分操作符" class="headerlink" title="LINQ操作符之切分操作符"></a>LINQ操作符之切分操作符</h4><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Take</td>
+<td>从序列的开头返回指定数量的连续元素</td>
+</tr>
+<tr>
+<td>TakeWhile</td>
+<td>只要满足指定的条件，就会返回序列的元素。</td>
+</tr>
+<tr>
+<td>Skip</td>
+<td>跳过序列中指定数量的元素，然后返回剩余的元素。</td>
+</tr>
+<tr>
+<td>SkipWhile</td>
+<td>只要满足指定的条件，就会跳过序列的元素。</td>
+</tr>
+</tbody></table>
+<p><code>tips:</code>TakeWhile和Where的区别在于，TakeWhile是从前往后计算，如果遇到不满足Func条件，则提前退出。</p>
+<h4 id="LINQ操作符之连接操作符"><a href="#LINQ操作符之连接操作符" class="headerlink" title="LINQ操作符之连接操作符"></a>LINQ操作符之连接操作符</h4><p>Concat操作符用于连接两个序列，生成一个新序列。</p>
+<h4 id="LINQ操作符之等式操作符"><a href="#LINQ操作符之等式操作符" class="headerlink" title="LINQ操作符之等式操作符"></a>LINQ操作符之等式操作符</h4><p>SequenceEqual()用于判断两个序列中的内容是否一致。</p>
+<h4 id="LINQ操作符之生成操作符"><a href="#LINQ操作符之生成操作符" class="headerlink" title="LINQ操作符之生成操作符"></a>LINQ操作符之生成操作符</h4><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DefaultEmpty</td>
+<td>返回指定序列的元素；如果序列为空，则返回单一实例集合中的类型参数的默认值。</td>
+</tr>
+<tr>
+<td>Empty</td>
+<td>初始化集合</td>
+</tr>
+<tr>
+<td>Range</td>
+<td>生成指定范围内的整数的序列</td>
+</tr>
+<tr>
+<td>Repeat</td>
+<td>生成包含一个重复值的序列</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Tony
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/10/12/Linq-md/" title="Linq">http://example.com/2022/10/12/Linq-md/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linq/" rel="tag"><i class="fa fa-tag"></i> Linq</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/12/Leetcode-453-%E6%9C%80%E5%B0%8F%E6%93%8D%E4%BD%9C%E6%AC%A1%E6%95%B0%E4%BD%BF%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%9B%B8%E7%AD%89-md/" rel="prev" title="Leetcode-453-最小操作次数使数组元素相等">
+      <i class="fa fa-chevron-left"></i> Leetcode-453-最小操作次数使数组元素相等
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#LINQ%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">LINQ介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFLINQ"><span class="nav-number">1.1.</span> <span class="nav-text">什么是LINQ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.2.</span> <span class="nav-text">LINQ的优势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LINQ%E6%A0%87%E5%87%86%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">LINQ标准查询操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BWhere"><span class="nav-number">2.1.</span> <span class="nav-text">LINQ操作符之Where</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BOfType"><span class="nav-number">2.2.</span> <span class="nav-text">LINQ操作符之OfType</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BOrderBy%E5%92%8COrderByDescending"><span class="nav-number">2.3.</span> <span class="nav-text">LINQ操作符之OrderBy和OrderByDescending</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BThenBy%E5%92%8CThenByDescending"><span class="nav-number">2.4.</span> <span class="nav-text">LINQ操作符之ThenBy和ThenByDescending</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8B-GroupBy"><span class="nav-number">2.5.</span> <span class="nav-text">LINQ操作符之 GroupBy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BToLookup"><span class="nav-number">2.6.</span> <span class="nav-text">LINQ操作符之ToLookup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BJoin"><span class="nav-number">2.7.</span> <span class="nav-text">LINQ操作符之Join</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BGroupJoin"><span class="nav-number">2.8.</span> <span class="nav-text">LINQ操作符之GroupJoin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BSelect"><span class="nav-number">2.9.</span> <span class="nav-text">LINQ操作符之Select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BSelectMany"><span class="nav-number">2.10.</span> <span class="nav-text">LINQ操作符之SelectMany</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BAll"><span class="nav-number">2.11.</span> <span class="nav-text">LINQ操作符之All</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BAny"><span class="nav-number">2.12.</span> <span class="nav-text">LINQ操作符之Any</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BContains"><span class="nav-number">2.13.</span> <span class="nav-text">LINQ操作符之Contains</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BAggregate"><span class="nav-number">2.14.</span> <span class="nav-text">LINQ操作符之Aggregate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BAverage"><span class="nav-number">2.15.</span> <span class="nav-text">LINQ操作符之Average</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BCount"><span class="nav-number">2.16.</span> <span class="nav-text">LINQ操作符之Count</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8BMax%E3%80%81Min%E3%80%81Sum"><span class="nav-number">2.17.</span> <span class="nav-text">LINQ操作符之Max、Min、Sum</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8B%E5%85%83%E7%B4%A0%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.18.</span> <span class="nav-text">LINQ操作符之元素操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8B%E9%9B%86%E5%90%88%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.19.</span> <span class="nav-text">LINQ操作符之集合操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8B%E5%88%87%E5%88%86%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.20.</span> <span class="nav-text">LINQ操作符之切分操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8B%E8%BF%9E%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.21.</span> <span class="nav-text">LINQ操作符之连接操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8B%E7%AD%89%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.22.</span> <span class="nav-text">LINQ操作符之等式操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LINQ%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B9%8B%E7%94%9F%E6%88%90%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.23.</span> <span class="nav-text">LINQ操作符之生成操作符</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tony"
+      src="/images/tony.svg">
+  <p class="site-author-name" itemprop="name">Tony</p>
+  <div class="site-description" itemprop="description">不要停止奔跑,不要回顾来路,来路无可眷恋,值得期待的只有远方!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=300 height=110 src="//music.163.com/outchain/player?type=0&id=404203653&auto=1&height=90"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tony</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
