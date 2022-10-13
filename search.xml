@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Leetcode-1611-使整数变为0的最少操作次数</title>
+    <url>/2022/10/13/Leetcode-1611-%E4%BD%BF%E6%95%B4%E6%95%B0%E5%8F%98%E4%B8%BA0%E7%9A%84%E6%9C%80%E5%B0%91%E6%93%8D%E4%BD%9C%E6%AC%A1%E6%95%B0/</url>
+    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个整数<code>n</code>，你需要重复执行多次下述操作将其转换为<code>0</code>：</p>
+<ul>
+<li>翻转<code>n</code>的二进制表示中最右侧位（第<code>0</code>位）。</li>
+<li>如果第<code>(i-1)</code>位为<code>1</code>且从第<code>(i-2)</code>位到第<code>0</code>位都为<code>0</code>，则翻转<code>n</code>的二进制表示中的第<code>i</code>位。</li>
+</ul>
+<p>返回将 n 转换为 0 的最小操作次数。</p>
+<span id="more"></span>
+
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：n = 3</span><br><span class="line">输出：2</span><br><span class="line">解释：3 的二进制表示为 <span class="string">&quot;11&quot;</span></span><br><span class="line"><span class="string">&quot;11&quot;</span> -&gt; <span class="string">&quot;01&quot;</span> ，执行的是第 2 种操作，因为第 0 位为 1 。</span><br><span class="line"><span class="string">&quot;01&quot;</span> -&gt; <span class="string">&quot;00&quot;</span> ，执行的是第 1 种操作。</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：n = 6</span><br><span class="line">输出：4</span><br><span class="line">解释：6 的二进制表示为 <span class="string">&quot;110&quot;</span>.</span><br><span class="line"><span class="string">&quot;110&quot;</span> -&gt; <span class="string">&quot;010&quot;</span> ，执行的是第 2 种操作，因为第 1 位为 1 ，第 0 到 0 位为 0 。</span><br><span class="line"><span class="string">&quot;010&quot;</span> -&gt; <span class="string">&quot;011&quot;</span> ，执行的是第 1 种操作。</span><br><span class="line"><span class="string">&quot;011&quot;</span> -&gt; <span class="string">&quot;001&quot;</span> ，执行的是第 2 种操作，因为第 0 位为 1 。</span><br><span class="line"><span class="string">&quot;001&quot;</span> -&gt; <span class="string">&quot;000&quot;</span> ，执行的是第 1 种操作。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>提示<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">0 &lt;= n &lt;= 109</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>首先我们先观察1-7移动需要的步数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">变化     原数据 (n)        需要步数 f(n)</span><br><span class="line">100       4              7</span><br><span class="line">101       5              6</span><br><span class="line">111       7              5  </span><br><span class="line">110       6              4</span><br><span class="line">010       2              3</span><br><span class="line">011       3              2</span><br><span class="line">001       1              1</span><br><span class="line">000       0              0</span><br></pre></td></tr></table></figure>
+
+<p>此处可以观察到数为2^k需要的步数是小于<code>2^（k+1）-1</code>中步数最多的，且其步数为<code>2^（k+1）-1</code>，例如4(2^2)，步数为2^3-1&#x3D;7</p>
+<p>且从该数变为0的过程中会经过小于该数的所有数字，则可将该题转化一下，若要求n,将n转化位2^k+j的形式，则步数为f(2^k)-f(j),例如7，为2^2+3，其步数为f(4)-f(3)&#x3D;7-2&#x3D;5</p>
+<p>如何发现其规则：从该数变为0的过程中会经过小于该数的所有数字，则从4变为7的过程，首尾1不动，其实就是反向的从11（二进制）变为00（二进制）的过程，因此用f(4)-f(3)即为步数</p>
+<p>只需要将该数转化为的二进制数数组，然后遍历一遍数组即可得到使整数变为0的最少操作次数</p>
+<p>举例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">25 -&gt; 11001 -&gt; f(16)-f(9)=f(16)-（f(8)-f(1)）=31-(15-1)=17</span><br><span class="line"></span><br><span class="line">从后向前遍历，开始（i=0）为1，即为2^0-1=1。 temp=1</span><br><span class="line">（i=3）  即为2^4-1=15       temp=15-1=14</span><br><span class="line">（i=4）  即为2^5-1=31       temp=31-14=17</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">MinimumOneBitOperations</span>(<span class="params"><span class="built_in">int</span> n</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//此处将n转换为二进制数数组，从后向前遍历           </span></span><br><span class="line">    <span class="built_in">char</span>[] charArray = Convert.ToString(n, <span class="number">2</span>).ToCharArray();</span><br><span class="line">    <span class="built_in">int</span> length = charArray.Length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//如果字符为&#x27;1&#x27;,就用(2^(i+1)-1)减去result</span></span><br><span class="line">        <span class="keyword">if</span> (charArray[length - i - <span class="number">1</span>] == <span class="string">&#x27;1&#x27;</span>)               </span><br><span class="line">        &#123;</span><br><span class="line">            result = ((<span class="number">2</span> &lt;&lt; (i))<span class="number">-1</span>)-result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode-769-最多能完成排序的块</title>
     <url>/2022/10/13/Leetcode-769-%E6%9C%80%E5%A4%9A%E8%83%BD%E5%AE%8C%E6%88%90%E6%8E%92%E5%BA%8F%E7%9A%84%E5%9D%97/</url>
     <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个长度为<code>n</code>的整数数组<code>arr</code>，它表示在<code>[0, n - 1]</code>范围内的整数的排列。</p>
