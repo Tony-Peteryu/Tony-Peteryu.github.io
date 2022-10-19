@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Leetcode-1953-你可以工作的最大周数</title>
+    <url>/2022/10/19/Leetcode-1953-%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%B7%A5%E4%BD%9C%E7%9A%84%E6%9C%80%E5%A4%A7%E5%91%A8%E6%95%B0/</url>
+    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你<code>n</code>个项目，编号从<code>0</code>到<code>n - 1</code>。同时给你一个整数数组<code>milestones</code>，其中每个<code>milestones[i]</code>表示第<code>i</code>个项目中的阶段任务数量。</p>
+<span id="more"></span>
+<p>你可以按下面两个规则参与项目中的工作：</p>
+<p>每周，你将会完成<strong>某一个</strong>项目中的<strong>恰好一个</strong>阶段任务。你每周都<strong>必须</strong>工作。<br>在<strong>连续的</strong>两周中，你<strong>不能</strong>参与并完成同一个项目中的两个阶段任务。<br>一旦所有项目中的全部阶段任务都完成，或者仅剩余一个阶段任务都会导致你违反上面的规则，那么你将<strong>停止工作</strong>。注意，由于这些条件的限制，你可能无法完成所有阶段任务。</p>
+<p>返回在不违反上面规则的情况下你<strong>最多</strong>能工作多少周。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：milestones = [1,2,3]</span><br><span class="line">输出：6</span><br><span class="line">解释：一种可能的情形是：</span><br><span class="line">​​​​- 第 1 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 2 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 3 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 4 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 5 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 6 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">总周数是 6 。</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：milestones = [5,2,1]</span><br><span class="line">输出：7</span><br><span class="line">解释：一种可能的情形是：</span><br><span class="line">- 第 1 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 2 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 3 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 4 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 5 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 6 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 7 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">总周数是 7 。</span><br><span class="line">注意，你不能在第 8 周参与完成项目 0 中的最后一个阶段任务，因为这会违反规则。</span><br><span class="line">因此，项目 0 中会有一个阶段任务维持未完成状态。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>提示<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">n == milestones.length</span><br><span class="line">1 &lt;= n &lt;= 105</span><br><span class="line">1 &lt;= milestones[i] &lt;= 109</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>本题采用贪心法的思路去处理，我们处理花费时长最多的项目，我们再处理该项目的时候，中间会插入其他项目</p>
+<ul>
+<li>若此时其他项目的总花费时间小于该项目时间，则最终工作时间为（其他项目时间总和*2）+1</li>
+<li>若此时其他项目的总花费时间大于该项目时间，则一定可以穿插完成所有项目，即最终工作时间为所有项目时间总和</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">long</span> <span class="title">NumberOfWeeks</span>(<span class="params"><span class="built_in">int</span>[] milestones</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    Array.Sort(milestones);</span><br><span class="line">    <span class="built_in">long</span> temp = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> maxNum = milestones[milestones.Length - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; milestones.Length<span class="number">-1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        temp += milestones[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxNum &gt; temp ? (<span class="number">2</span>*temp+<span class="number">1</span>) : maxNum+temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode-902-最大为N的数字组合</title>
     <url>/2022/10/18/Leetcode-902-%E6%9C%80%E5%A4%A7%E4%B8%BAN%E7%9A%84%E6%95%B0%E5%AD%97%E7%BB%84%E5%90%88/</url>
     <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个按<strong>非递减顺序</strong>排列的数字数组<code>digits</code>。你可以用任意次数<code>digits[i]</code>来写的数字。例如，如果<code>digits</code>&#x3D;<code>[&#39;1&#39;,&#39;3&#39;,&#39;5&#39;]</code>，我们可以写数字，如<code>&#39;13&#39;</code>,<code>&#39;551&#39;</code>, 和<code>&#39;1351315&#39;</code>。</p>
