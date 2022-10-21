@@ -29,7 +29,7 @@
 <meta property="og:description" content="题目给你n个项目，编号从0到n - 1。同时给你一个整数数组milestones，其中每个milestones[i]表示第i个项目中的阶段任务数量。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-19T06:58:37.000Z">
-<meta property="article:modified_time" content="2022-10-19T07:52:47.132Z">
+<meta property="article:modified_time" content="2022-10-21T03:53:37.849Z">
 <meta property="article:author" content="Tony">
 <meta property="article:tag" content="Leetcode">
 <meta name="twitter:card" content="summary">
@@ -220,10 +220,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-10-19 14:58:37 / 修改时间：15:52:47" itemprop="dateCreated datePublished" datetime="2022-10-19T14:58:37+08:00">2022-10-19</time>
+              <time title="创建时间：2022-10-19 14:58:37" itemprop="dateCreated datePublished" datetime="2022-10-19T14:58:37+08:00">2022-10-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-21 11:53:37" itemprop="dateModified" datetime="2022-10-21T11:53:37+08:00">2022-10-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -264,9 +270,9 @@
 <p>你可以按下面两个规则参与项目中的工作：</p>
 <p>每周，你将会完成<strong>某一个</strong>项目中的<strong>恰好一个</strong>阶段任务。你每周都<strong>必须</strong>工作。<br>在<strong>连续的</strong>两周中，你<strong>不能</strong>参与并完成同一个项目中的两个阶段任务。<br>一旦所有项目中的全部阶段任务都完成，或者仅剩余一个阶段任务都会导致你违反上面的规则，那么你将<strong>停止工作</strong>。注意，由于这些条件的限制，你可能无法完成所有阶段任务。</p>
 <p>返回在不违反上面规则的情况下你<strong>最多</strong>能工作多少周。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输入：milestones = [1,2,3]</span><br><span class="line">输出：6</span><br><span class="line">解释：一种可能的情形是：</span><br><span class="line">​​​​- 第 1 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 2 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 3 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 4 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 5 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 6 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">总周数是 6 。</span><br></pre></td></tr></table></figure>
+<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输入：milestones = [1,2,3]</span><br><span class="line">输出：6</span><br><span class="line">解释：一种可能的情形是：</span><br><span class="line">​​​​- 第 1 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 2 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 3 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 4 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 5 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 6 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">总周数是 6 。</span><br></pre></td></tr></table></figure>
 
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">输入：milestones = [5,2,1]</span><br><span class="line">输出：7</span><br><span class="line">解释：一种可能的情形是：</span><br><span class="line">- 第 1 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 2 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 3 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 4 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 5 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 6 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 7 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">总周数是 7 。</span><br><span class="line">注意，你不能在第 8 周参与完成项目 0 中的最后一个阶段任务，因为这会违反规则。</span><br><span class="line">因此，项目 0 中会有一个阶段任务维持未完成状态。</span><br></pre></td></tr></table></figure>
+<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">输入：milestones = [5,2,1]</span><br><span class="line">输出：7</span><br><span class="line">解释：一种可能的情形是：</span><br><span class="line">- 第 1 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 2 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 3 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 4 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 5 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 6 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 7 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">总周数是 7 。</span><br><span class="line">注意，你不能在第 8 周参与完成项目 0 中的最后一个阶段任务，因为这会违反规则。</span><br><span class="line">因此，项目 0 中会有一个阶段任务维持未完成状态。</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>提示<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n == milestones.length</span><br><span class="line">1 &lt;= n &lt;= 105</span><br><span class="line">1 &lt;= milestones[i] &lt;= 109</span><br></pre></td></tr></table></figure></li>
@@ -314,7 +320,10 @@
     <a href="/2022/10/18/Leetcode-902-%E6%9C%80%E5%A4%A7%E4%B8%BAN%E7%9A%84%E6%95%B0%E5%AD%97%E7%BB%84%E5%90%88/" rel="prev" title="Leetcode-902-最大为N的数字组合">
       <i class="fa fa-chevron-left"></i> Leetcode-902-最大为N的数字组合
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/21/Leetcode-76-%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2/" rel="next" title="Leetcode-76-最小覆盖子串">
+      Leetcode-76-最小覆盖子串 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -372,7 +381,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">4.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text">代码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">示例 2：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -388,7 +397,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

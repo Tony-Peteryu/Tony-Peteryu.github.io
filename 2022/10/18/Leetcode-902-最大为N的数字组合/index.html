@@ -29,7 +29,7 @@
 <meta property="og:description" content="题目给定一个按非递减顺序排列的数字数组digits。你可以用任意次数digits[i]来写的数字。例如，如果digits&#x3D;[&#39;1&#39;,&#39;3&#39;,&#39;5&#39;]，我们可以写数字，如&#39;13&#39;,&#39;551&#39;, 和&#39;1351315&#39;。 返回 可以生成的小于或等于给定整数n的正整数的个数 。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-18T07:03:31.000Z">
-<meta property="article:modified_time" content="2022-10-18T07:29:50.519Z">
+<meta property="article:modified_time" content="2022-10-21T03:54:07.489Z">
 <meta property="article:author" content="Tony">
 <meta property="article:tag" content="Leetcode">
 <meta name="twitter:card" content="summary">
@@ -220,10 +220,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-10-18 15:03:31 / 修改时间：15:29:50" itemprop="dateCreated datePublished" datetime="2022-10-18T15:03:31+08:00">2022-10-18</time>
+              <time title="创建时间：2022-10-18 15:03:31" itemprop="dateCreated datePublished" datetime="2022-10-18T15:03:31+08:00">2022-10-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-21 11:54:07" itemprop="dateModified" datetime="2022-10-21T11:54:07+08:00">2022-10-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -263,11 +269,11 @@
 <p>返回 可以生成的小于或等于给定整数<code>n</code>的正整数的个数 。</p>
 <span id="more"></span>
 
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入：digits = [<span class="string">&quot;1&quot;</span>,<span class="string">&quot;3&quot;</span>,<span class="string">&quot;5&quot;</span>,<span class="string">&quot;7&quot;</span>], n = 100</span><br><span class="line">输出：20</span><br><span class="line">解释：</span><br><span class="line">可写出的 20 个数字是：</span><br><span class="line">1, 3, 5, 7, 11, 13, 15, 17, 31, 33, 35, 37, 51, 53, 55, 57, 71, 73, 75, 77.</span><br></pre></td></tr></table></figure>
+<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入：digits = [<span class="string">&quot;1&quot;</span>,<span class="string">&quot;3&quot;</span>,<span class="string">&quot;5&quot;</span>,<span class="string">&quot;7&quot;</span>], n = 100</span><br><span class="line">输出：20</span><br><span class="line">解释：</span><br><span class="line">可写出的 20 个数字是：</span><br><span class="line">1, 3, 5, 7, 11, 13, 15, 17, 31, 33, 35, 37, 51, 53, 55, 57, 71, 73, 75, 77.</span><br></pre></td></tr></table></figure>
 
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入：digits = [<span class="string">&quot;1&quot;</span>,<span class="string">&quot;4&quot;</span>,<span class="string">&quot;9&quot;</span>], n = 1000000000</span><br><span class="line">输出：29523</span><br><span class="line">解释：</span><br><span class="line">我们可以写 3 个一位数字，9 个两位数字，27 个三位数字，</span><br><span class="line">81 个四位数字，243 个五位数字，729 个六位数字，</span><br><span class="line">2187 个七位数字，6561 个八位数字和 19683 个九位数字。</span><br><span class="line">总共，可以使用D中的数字写出 29523 个整数。</span><br></pre></td></tr></table></figure>
+<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入：digits = [<span class="string">&quot;1&quot;</span>,<span class="string">&quot;4&quot;</span>,<span class="string">&quot;9&quot;</span>], n = 1000000000</span><br><span class="line">输出：29523</span><br><span class="line">解释：</span><br><span class="line">我们可以写 3 个一位数字，9 个两位数字，27 个三位数字，</span><br><span class="line">81 个四位数字，243 个五位数字，729 个六位数字，</span><br><span class="line">2187 个七位数字，6561 个八位数字和 19683 个九位数字。</span><br><span class="line">总共，可以使用D中的数字写出 29523 个整数。</span><br></pre></td></tr></table></figure>
 
-<h3 id="示例-2：-1"><a href="#示例-2：-1" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：digits = [<span class="string">&quot;7&quot;</span>], n = 8</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
+<h4 id="示例-2：-1"><a href="#示例-2：-1" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：digits = [<span class="string">&quot;7&quot;</span>], n = 8</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>提示<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1 &lt;= digits.length &lt;= 9</span><br><span class="line">digits[i].length == 1</span><br><span class="line">digits[i] 是从 <span class="string">&#x27;1&#x27;</span> 到 <span class="string">&#x27;9&#x27;</span> 的数</span><br><span class="line">digits 中的所有值都 不同 </span><br><span class="line">digits 按 非递减顺序 排列</span><br><span class="line">1 &lt;= n &lt;= 109</span><br></pre></td></tr></table></figure></li>
@@ -391,7 +397,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A-1"><span class="nav-number">4.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">6.</span> <span class="nav-text">代码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A-1"><span class="nav-number">1.3.</span> <span class="nav-text">示例 2：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -407,7 +413,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
