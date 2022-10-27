@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/tony-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/tony-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/tony-16x16.png">
+  <link rel="mask-icon" href="/images/tony.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tony-peteryu.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+  <meta name="description" content="引言在互联网业务中，传统的直接访问数据库方式，主要是通过数据分片，一写多读的方式去抗住数据流量，但是随着数据量的激增，并且大多数都是读多写少的场景 ，仅仅依靠数据库查询，成本高，效率低，且稳定性远远不够。因此，在架构设计中，常采用增加缓存层来提高系统的响应能力，提升数据读写性能、减少数据库访问压力，从而提升业务的稳定性和访问体验。引入缓存又带来了新的问题，那就是数据库与缓存一致性的问题，该问题不局">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高并发下的数据库与缓存一致性问题">
+<meta property="og:url" content="http://tony-peteryu.github.io/2022/10/27/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Tony&#39;s Blog">
+<meta property="og:description" content="引言在互联网业务中，传统的直接访问数据库方式，主要是通过数据分片，一写多读的方式去抗住数据流量，但是随着数据量的激增，并且大多数都是读多写少的场景 ，仅仅依靠数据库查询，成本高，效率低，且稳定性远远不够。因此，在架构设计中，常采用增加缓存层来提高系统的响应能力，提升数据读写性能、减少数据库访问压力，从而提升业务的稳定性和访问体验。引入缓存又带来了新的问题，那就是数据库与缓存一致性的问题，该问题不局">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-27T06:14:36.000Z">
+<meta property="article:modified_time" content="2022-10-27T06:17:41.465Z">
+<meta property="article:author" content="Tony">
+<meta property="article:tag" content="一致性问题">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://tony-peteryu.github.io/2022/10/27/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>高并发下的数据库与缓存一致性问题 | Tony's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tony's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">欢迎您的到来,阅读愉快</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tony-peteryu.github.io/2022/10/27/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tony.svg">
+      <meta itemprop="name" content="Tony">
+      <meta itemprop="description" content="不要停止奔跑,不要回顾来路,来路无可眷恋,值得期待的只有远方!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tony's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          高并发下的数据库与缓存一致性问题
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-27 14:14:36 / 修改时间：14:17:41" itemprop="dateCreated datePublished" datetime="2022-10-27T14:14:36+08:00">2022-10-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index"><span itemprop="name">微服务</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>在互联网业务中，传统的直接访问数据库方式，主要是通过数据分片，一写多读的方式去抗住数据流量，但是随着数据量的激增，并且大多数都是读多写少的场景 ，仅仅依靠数据库查询，成本高，效率低，且稳定性远远不够。因此，在架构设计中，常采用增加缓存层来提高系统的响应能力，提升数据读写性能、减少数据库访问压力，从而提升业务的稳定性和访问体验。<br>引入缓存又带来了新的问题，那就是数据库与缓存一致性的问题，该问题不局限于语言，是个公共问题，尤其在高并发的情况下很容易出现该问题。</p>
+<span id="more"></span>
+
+<p>使用数据库缓存的场景一般可以分为读操作和写操作。</p>
+<ul>
+<li><strong>读操作</strong>：<ul>
+<li>命中缓存(cache hit)：当客户端从缓存中读取到数据时，可以直接返回。</li>
+<li>未命中缓存(cache miss)：当读取的数据不在缓存时，需要从数据库中读取数据并写入缓存。</li>
+<li><strong>缓存的命中率</strong> &#x3D; 命中缓存请求个数&#x2F;总缓存访问请求个数 &#x3D; hit &#x2F; (hit+miss)，缓存的命中率是衡量缓存效果的重要指标，命中率越大，对后端数据库的压力越小。</li>
+</ul>
+</li>
+<li><strong>写操作</strong>：<ul>
+<li>缓存与数据库中的数据都需要被修改，因为要涉及缓存和数据库两个点的数据修改，且无法满足原子性，需要重点考虑数据一致性的问题，这也是数据库缓存使用的难点和重点。</li>
+</ul>
+</li>
+</ul>
+<h3 id="常见的解决方案"><a href="#常见的解决方案" class="headerlink" title="常见的解决方案"></a>常见的解决方案</h3><h4 id="先更新缓存，再更新数据库"><a href="#先更新缓存，再更新数据库" class="headerlink" title="先更新缓存，再更新数据库"></a>先更新缓存，再更新数据库</h4><ul>
+<li>我们先来分析一下此种方案的问题<ul>
+<li>初始缓存为0，数据库为0，A更新缓存为1</li>
+<li>A更新数据库失败，此时数据库中数据为0，缓存中数据为0</li>
+<li>出现脏数据情况</li>
+</ul>
+</li>
+</ul>
+<p><strong>异步回写</strong>：在处理写请求的时候，先只更新缓存，对于数据库的更新是使用批量异步更新的方式去处理的，这种方式，由于前面的更新操作只发生在缓存中，因此对于缓存的高可用要求比较高，但由于读写操作都在缓存中处理，大大提升了响应速度</p>
+<ul>
+<li>使用场景<br>比较适用于写入较多的极端场景，例如：电商秒杀系统</li>
+</ul>
+<h4 id="先更新数据库，再更新缓存"><a href="#先更新数据库，再更新缓存" class="headerlink" title="先更新数据库，再更新缓存"></a>先更新数据库，再更新缓存</h4><ul>
+<li>分析一下此种方案的问题<ul>
+<li>初始缓存为0，数据库为0</li>
+<li>A请求更新数据，更新数据库中数据为1</li>
+<li>B请求更新数据，更新数据库中数据为2，此时数据库中数据为2</li>
+<li>B更新缓存中数据为2，A由于网络延迟此时才更新缓存中的数据，更新缓存中数据为1</li>
+<li>出现数据库与缓存不一致情况</li>
+</ul>
+</li>
+<li>更新缓存失败也会造成数据库与缓存不一致情况出现</li>
+</ul>
+<p><strong>直写模式</strong>：这种模式优点在于读请求过程十分简单，不需要进行数据库查询操作，不管是先更新数据库，再更新缓存，还是先更新缓存再更新数据库，都会由于线程竞争原因出现数据库与缓存不一致的情况。</p>
+<p><strong>解决方案</strong>：可以将数据库更新与缓存的更新放在同一个事务中处理，线程竞争导致的不一致情况通过分布式锁解决，保证对缓存和数据库的操作仅能由同一个线程完成。对于没有拿到锁的线程，一是通过锁的timeout时间进行控制，二是将请求暂存在消息队列中顺序消费。</p>
+<ul>
+<li>使用场景<br>适合写操作较多，并且对一致性要求较高的场景</li>
+</ul>
+<p>上述两种方案，都是去更新缓存，主要是为了写操作较多的场景，针对于读操作较多的场景，可以使用删除缓存的形式去处理，这样处理的好处</p>
+<ul>
+<li>性能方面：假设缓存不是从数据库中读取出后就直接写进去的，而是需要复杂的计算后才能得出需要写入缓存的结果，此时每次更新数据的操作都去更新缓存在不需要读取该缓存的时候是不必要的，我们可以删除缓存，在读操作的时候再进行缓存的写入，这样可以大大提高性能。</li>
+<li><code>分析：</code>删除与更新在实际上的区别就是一次cache  miss</li>
+</ul>
+<h3 id="先删除缓存，再写入数据库"><a href="#先删除缓存，再写入数据库" class="headerlink" title="先删除缓存，再写入数据库"></a>先删除缓存，再写入数据库</h3><ul>
+<li>分析一下此种方案的问题<ul>
+<li>初始数据库中为0，缓存中为0</li>
+<li>A删除缓存，在A还未更新数据库时B请求读数据，缓存中无数据，从数据库中读取0，并写入缓存中</li>
+<li>A更新数据库为1，此时缓存中为0，数据库中为1，出现数据库与缓存不一致情况</li>
+</ul>
+</li>
+</ul>
+<p><strong>解决方案</strong>：使用延时删除策略，即更新数据库后再对缓存进行删除操作，延时时间根据读操作并写缓存的耗时决定</p>
+<p><code>疑问</code>：延时双删与先更新数据库后删除缓存的区别以及优势在哪</p>
+<p>个人理解：延时双删由于先删除缓存中的数据，可以保证在删除缓存与更新数据库的过程中一定获取的为最新的数据。同时对于先更新数据库再更新缓存中必出现的短暂缓存不一致情况，此时延时双删这阶段出现缓存不一致概率会有所降低。</p>
+<p>但是由于我们讨论的场景为高并发的场景下，在读操作比较多的时候，在删除缓存与更新数据库间出现数据查询的概率还是很高的，因此此时延时双删的方案的问题就又变回了先更新再删除缓存的问题。同时也引入了延时的时间确定性麻烦，不建议盲目使用延时双删策略</p>
+<h3 id="先更新数据库，再删除缓存"><a href="#先更新数据库，再删除缓存" class="headerlink" title="先更新数据库，再删除缓存"></a>先更新数据库，再删除缓存</h3><ul>
+<li>分析一下此种方案的问题<ul>
+<li>初始数据库中为0，缓存中为0</li>
+<li>A更新数据库为1，此时B查询缓存为0，但数据库为1，出现数据库与缓存不一致情况</li>
+<li>A删除缓存失败，也会出现不一致情况</li>
+</ul>
+</li>
+</ul>
+<p>此方案中更新数据库与删除缓存的短暂数据库不一致情况可忽略，主要处理删除缓存失败的情况</p>
+<p><strong>解决方案</strong>：主要是针对上述删除缓存失败的情况，为此使用补偿机制</p>
+<ul>
+<li>添加删除重试机制<br>使用消息队列的形式去处理。将删除失败的缓存对应的key放入消息队列中，在对应的消费者中获取删除失败的key，异步重试删除。这种方式对代码有侵入性</li>
+<li>基于数据库日志（MySQL binlog）增量解析、订阅和消费</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从上述分析来看，不管哪种方式可能都存在一定的不一致情况出现，需要针对不同的场景进行不同的设计，同时在缓存的处理上面可以使用分布式锁的机制去处理，也可以避免缓存不一致情况，但是此种方式会影响系统的吞吐量，在使用缓存的时候要使用过期时间去处理。</p>
+<p>在读多写少的场景中，建议使用先更新数据库，再删除缓存的方式进行处理，再写多且对数据一致性要求比较高的场景中，可以使用先更新数据库，再更新缓存的方式处理，面对一些极端写场景，可以使用先更新缓存，然后异步写入数据库的方式处理。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Tony
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://tony-peteryu.github.io/2022/10/27/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98/" title="高并发下的数据库与缓存一致性问题">http://tony-peteryu.github.io/2022/10/27/高并发下的数据库与缓存一致性问题/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98/" rel="tag"><i class="fa fa-tag"></i> 一致性问题</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/27/NetCore-WebApi%E7%BB%9F%E4%B8%80%E5%8C%85%E8%A3%85%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C/" rel="prev" title="NetCore-WebApi统一包装返回结果">
+      <i class="fa fa-chevron-left"></i> NetCore-WebApi统一包装返回结果
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/27/xunit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="next" title="xunit-单元测试">
+      xunit-单元测试 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">常见的解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%88%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98%EF%BC%8C%E5%86%8D%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">先更新缓存，再更新数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%88%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E5%86%8D%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98"><span class="nav-number">2.2.</span> <span class="nav-text">先更新数据库，再更新缓存</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%88%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%EF%BC%8C%E5%86%8D%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">先删除缓存，再写入数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%88%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E5%86%8D%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98"><span class="nav-number">4.</span> <span class="nav-text">先更新数据库，再删除缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tony"
+      src="/images/tony.svg">
+  <p class="site-author-name" itemprop="name">Tony</p>
+  <div class="site-description" itemprop="description">不要停止奔跑,不要回顾来路,来路无可眷恋,值得期待的只有远方!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=300 height=110 src="//music.163.com/outchain/player?type=0&id=404203653&auto=1&height=90"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tony</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

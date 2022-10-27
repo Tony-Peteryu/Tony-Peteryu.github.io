@@ -21,20 +21,19 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"tony-peteryu.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
-  <meta name="description" content="题目给你一个数组target和一个整数n。每次迭代，需要从 list &#x3D; &amp;#123; 1 , 2 , 3 ..., n &amp;#125;中依次读取一个数字。">
+  <meta name="description" content="什么是 Cookie Http是无状态的：客户端的每一次请求都是独立的，服务端无法对当前访问者的身份信息进行确认，无法确认哪些请求来自同一个人，服务器与浏览器为了进行会话跟踪（知道是谁在访问我），就必须主动的去维护一个状态，这个状态用于告知服务端前后两个请求是否来自同一浏览器。而这个状态需要通过 cookie 或者 session 去实现。 cookie 存储在客户端： cookie 是服务器发送">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode-1441-用栈操作构建数组">
-<meta property="og:url" content="http://tony-peteryu.github.io/2022/10/17/Leetcode-1441-%E7%94%A8%E6%A0%88%E6%93%8D%E4%BD%9C%E6%9E%84%E5%BB%BA%E6%95%B0%E7%BB%84/index.html">
+<meta property="og:title" content="Session、Cookie、Token、Jwt">
+<meta property="og:url" content="http://tony-peteryu.github.io/2022/10/27/Session%E3%80%81Cookie%E3%80%81Token%E3%80%81Jwt/index.html">
 <meta property="og:site_name" content="Tony&#39;s Blog">
-<meta property="og:description" content="题目给你一个数组target和一个整数n。每次迭代，需要从 list &#x3D; &amp;#123; 1 , 2 , 3 ..., n &amp;#125;中依次读取一个数字。">
+<meta property="og:description" content="什么是 Cookie Http是无状态的：客户端的每一次请求都是独立的，服务端无法对当前访问者的身份信息进行确认，无法确认哪些请求来自同一个人，服务器与浏览器为了进行会话跟踪（知道是谁在访问我），就必须主动的去维护一个状态，这个状态用于告知服务端前后两个请求是否来自同一浏览器。而这个状态需要通过 cookie 或者 session 去实现。 cookie 存储在客户端： cookie 是服务器发送">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-17T07:21:04.000Z">
-<meta property="article:modified_time" content="2022-10-21T03:53:28.932Z">
+<meta property="article:published_time" content="2022-10-27T06:20:19.000Z">
+<meta property="article:modified_time" content="2022-10-27T06:21:20.192Z">
 <meta property="article:author" content="Tony">
-<meta property="article:tag" content="Leetcode">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://tony-peteryu.github.io/2022/10/17/Leetcode-1441-%E7%94%A8%E6%A0%88%E6%93%8D%E4%BD%9C%E6%9E%84%E5%BB%BA%E6%95%B0%E7%BB%84/">
+<link rel="canonical" href="http://tony-peteryu.github.io/2022/10/27/Session%E3%80%81Cookie%E3%80%81Token%E3%80%81Jwt/">
 
 
 <script id="page-configurations">
@@ -47,7 +46,7 @@
   };
 </script>
 
-  <title>Leetcode-1441-用栈操作构建数组 | Tony's Blog</title>
+  <title>Session、Cookie、Token、Jwt | Tony's Blog</title>
   
 
 
@@ -196,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tony-peteryu.github.io/2022/10/17/Leetcode-1441-%E7%94%A8%E6%A0%88%E6%93%8D%E4%BD%9C%E6%9E%84%E5%BB%BA%E6%95%B0%E7%BB%84/">
+    <link itemprop="mainEntityOfPage" href="http://tony-peteryu.github.io/2022/10/27/Session%E3%80%81Cookie%E3%80%81Token%E3%80%81Jwt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/tony.svg">
@@ -209,7 +208,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Leetcode-1441-用栈操作构建数组
+          Session、Cookie、Token、Jwt
         </h1>
 
         <div class="post-meta">
@@ -220,24 +219,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-10-17 15:21:04" itemprop="dateCreated datePublished" datetime="2022-10-17T15:21:04+08:00">2022-10-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-21 11:53:28" itemprop="dateModified" datetime="2022-10-21T11:53:28+08:00">2022-10-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
+              <time title="创建时间：2022-10-27 14:20:19 / 修改时间：14:21:20" itemprop="dateCreated datePublished" datetime="2022-10-27T14:20:19+08:00">2022-10-27</time>
             </span>
 
           <br>
@@ -246,14 +230,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1k</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -265,36 +249,84 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个数组<code>target</code>和一个整数<code>n</code>。每次迭代，需要从 <code>list = &#123; 1 , 2 , 3 ..., n &#125;</code>中依次读取一个数字。</p>
+        <h4 id="什么是-Cookie"><a href="#什么是-Cookie" class="headerlink" title="什么是 Cookie"></a>什么是 Cookie</h4><ul>
+<li>Http是无状态的：客户端的每一次请求都是独立的，服务端无法对当前访问者的身份信息进行确认，无法确认哪些请求来自同一个人，服务器与浏览器为了进行会话跟踪（知道是谁在访问我），就必须主动的去维护一个状态，这个状态用于告知服务端前后两个请求是否来自同一浏览器。而这个状态需要通过 cookie 或者 session 去实现。</li>
+<li>cookie 存储在客户端： cookie 是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器下次向同一服务器再发起请求时被携带并发送到服务器上。</li>
+<li>cookie 是不可跨域的： 每个 cookie 都会绑定单一的域名，无法在别的域名下获取使用，一级域名和二级域名之间是允许共享使用的（靠的是 domain）。</li>
+</ul>
 <span id="more"></span>
 
-<p>请使用下述操作来构建目标数组<code>target</code>：</p>
-<ul>
-<li><code>&quot;Push&quot;</code>：从<code>list</code>中读取一个新元素， 并将其推入数组中。</li>
-<li><code>&quot;Pop&quot;</code>：删除数组中的最后一个元素。</li>
-<li>如果目标数组构建完成，就停止读取更多元素。</li>
-</ul>
-<p>题目数据保证目标数组严格递增，并且只包含<code>1</code>到<code>n</code>之间的数字。</p>
-<p>请返回构建目标数组所用的操作序列。如果存在多个可行方案，返回任一即可。</p>
-<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">输入：target = [1,3], n = 3</span><br><span class="line">输出：[<span class="string">&quot;Push&quot;</span>,<span class="string">&quot;Push&quot;</span>,<span class="string">&quot;Pop&quot;</span>,<span class="string">&quot;Push&quot;</span>]</span><br><span class="line">解释： </span><br><span class="line">读取 1 并自动推入数组 -&gt; [1]</span><br><span class="line">读取 2 并自动推入数组，然后删除它 -&gt; [1]</span><br><span class="line">读取 3 并自动推入数组 -&gt; [1,3]</span><br></pre></td></tr></table></figure>
-
-<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：target = [1,2,3], n = 3</span><br><span class="line">输出：[<span class="string">&quot;Push&quot;</span>,<span class="string">&quot;Push&quot;</span>,<span class="string">&quot;Push&quot;</span>]</span><br></pre></td></tr></table></figure>
-
-<h4 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：target = [1,2], n = 4</span><br><span class="line">输出：[<span class="string">&quot;Push&quot;</span>,<span class="string">&quot;Push&quot;</span>]</span><br><span class="line">解释：只需要读取前 2 个数字就可以停止。</span><br></pre></td></tr></table></figure>
-
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>题目中给出的数组是严格递增的，因此我们可以遍历<code>target</code>，同时维护一个<code>temp</code>，从<code>1</code>开始</p>
-<ul>
-<li>若<code>target</code>中的数不等于<code>temp</code>时<ul>
-<li>添加[“Push”, “Pop”]</li>
-</ul>
-</li>
-<li>若<code>target</code>中的数不等于<code>temp</code>时<ul>
-<li>添加[“Push”]</li>
+<h4 id="什么是-Session"><a href="#什么是-Session" class="headerlink" title="什么是 Session"></a>什么是 Session</h4><ul>
+<li>session 是另一种记录服务器和客户端会话状态的机制</li>
+<li>session 是基于 cookie 实现的，session 存储在服务器端，sessionId 会被存储到客户端的cookie 中</li>
+<li>Session认证流程<ul>
+<li>用户第一次访问服务器，服务器端生成Session</li>
+<li>服务器将Session对应的SessionId写入cookie中</li>
+<li>进行第二次访问的时候，客户端携带cookie进行访问，根据cookie中携带的Sessionid查找对应的Session，如果没有找到说明用户没有登录或者登录失效，如果找到 Session 证明用户已经登录可执行后面操作。</li>
 </ul>
 </li>
 </ul>
-<p>遍历完成即数组构建完成</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> IList&lt;<span class="built_in">string</span>&gt; <span class="title">BuildArray</span>(<span class="params"><span class="built_in">int</span>[] target, <span class="built_in">int</span> n</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> temp = <span class="number">1</span>;</span><br><span class="line">    List&lt;<span class="built_in">string</span>&gt; result = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; target.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (target[i] != temp) </span><br><span class="line">        &#123;</span><br><span class="line">            result.Add(<span class="string">&quot;Push&quot;</span>);</span><br><span class="line">            result.Add(<span class="string">&quot;Pop&quot;</span>);</span><br><span class="line">            temp++;</span><br><span class="line">        &#125;</span><br><span class="line">        result.Add(<span class="string">&quot;Push&quot;</span>);</span><br><span class="line">        temp++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Session与Cookie的区别"><a href="#Session与Cookie的区别" class="headerlink" title="Session与Cookie的区别"></a>Session与Cookie的区别</h4><ul>
+<li>作用范围不同，Cookie 保存在客户端（浏览器），Session 保存在服务器端。</li>
+<li>存取方式的不同，Cookie 只能保存 ASCII，Session 可以存任意数据类型，一般情况下我们可以在 Session 中保持一些常用变量信息，比如说 UserId 等。</li>
+<li>有效期不同，Cookie 可设置为长时间保持，比如我们经常使用的默认登录功能，Session 一般失效时间较短，客户端关闭或者 Session 超时都会失效。</li>
+<li>隐私策略不同，Cookie 存储在客户端，比较容易遭到不法获取，早期有人将用户的登录名和密码存储在 Cookie 中导致信息被窃取；Session 存储在服务端，安全性相对 Cookie 要好一些。</li>
+<li>存储大小不同， 单个 Cookie 保存的数据不能超过 4K，Session 可存储数据远高于 Cookie。</li>
+</ul>
+<h4 id="Token"><a href="#Token" class="headerlink" title="Token"></a>Token</h4><p>Token的定义：Token是服务端生成的一串字符串，以作客户端进行请求的一个令牌，当第一次登录后，服务器生成一个Token便将此Token返回给客户端，客户端在此登录访问服务器需要带上token，验证用户的登录账号和密码的合法性。</p>
+<ul>
+<li>访问资源接口（API）时所需要的资源凭证</li>
+<li>特点：<ul>
+<li>服务端无状态化、可扩展性好</li>
+<li>支持移动端设备</li>
+<li>安全</li>
+<li>支持跨程序调用</li>
+</ul>
+</li>
+<li>基于 token 的用户认证是一种服务端无状态的认证方式，服务端不用存放 token 数据。用解析 token 的计算时间换取 session 的存储空间，从而减轻服务器的压力。</li>
+</ul>
+<h4 id="Token-和-Session-的区别"><a href="#Token-和-Session-的区别" class="headerlink" title="Token 和 Session 的区别"></a>Token 和 Session 的区别</h4><ul>
+<li>Session 是一种记录服务器和客户端会话状态的机制，使服务端有状态化，可以记录会话信息。而 Token 是令牌，访问资源接口（API）时所需要的资源凭证。Token 使服务端无状态化，不会存储会话信息。</li>
+<li>作为身份认证 Token 安全性比 Session 好，因为每一个请求都有签名还能防止监听以及重放攻击，而 Session 就必须依赖链路层来保障通讯安全了。如果你需要实现有状态的会话，仍然可以增加 Session 来在服务器端保存一些状态。</li>
+</ul>
+<h4 id="使用cookie需要注意的问题"><a href="#使用cookie需要注意的问题" class="headerlink" title="使用cookie需要注意的问题"></a>使用cookie需要注意的问题</h4><ul>
+<li>因为存储在客户端，容易被客户端篡改，使用前需要验证合法性</li>
+<li>不要存储敏感数据，比如用户密码，账户余额</li>
+<li>使用 httpOnly 在一定程度上提高安全性</li>
+<li>尽量减少 cookie 的体积，能存储的数据量不能超过 4kb</li>
+<li>设置正确的 domain 和 path，减少数据传输</li>
+<li>cookie 无法跨域</li>
+<li>一个浏览器针对一个网站最多存 20 个Cookie，浏览器一般只允许存放 300 个Cookie</li>
+<li>移动端对 cookie 的支持不是很好，而 session 需要基于 cookie 实现，所以移动端常用的是 token</li>
+</ul>
+<h4 id="使用Session需要注意的问题"><a href="#使用Session需要注意的问题" class="headerlink" title="使用Session需要注意的问题"></a>使用Session需要注意的问题</h4><ul>
+<li>将 session 存储在服务器里面，当用户同时在线量比较多时，这些 session 会占据较多的内存，需要在服务端定期的去清理过期的 session</li>
+<li>当网站采用集群部署的时候，会遇到多台 web 服务器之间如何做 session 共享的问题。因为 session 是由单个服务器创建的，但是处理用户请求的服务器不一定是那个创建 session 的服务器，那么该服务器就无法拿到之前已经放入到 session 中的登录凭证之类的信息了。</li>
+<li>当多个应用要共享 session 时，除了以上问题，还会遇到跨域问题，因为不同的应用可能部署的主机不一样，需要在各个应用做好 cookie 跨域的处理。</li>
+<li>sessionId 是存储在 cookie 中的，假如浏览器禁止 cookie 或不支持 cookie 怎么办？ 一般会把 sessionId 跟在 url 参数后面即重写 url，所以 session 不一定非得需要靠 cookie 实现</li>
+</ul>
+<h4 id="Session共享方案"><a href="#Session共享方案" class="headerlink" title="Session共享方案"></a>Session共享方案</h4><ul>
+<li>session 复制<ul>
+<li>任何一个服务器上的 session 发生改变（增删改），该节点会把这个 session 的所有内容序列化，然后广播给所有其它节点，不管其他服务器需不需要 session ，以此来保证 session 同步。</li>
+</ul>
+</li>
+<li>session &#x2F;IP 绑定策略<ul>
+<li>采用 Ngnix 中的 ip_hash 机制，将某个 ip的所有请求都定向到同一台服务器上，即将用户与服务器绑定。</li>
+</ul>
+</li>
+<li>session 共享<ul>
+<li>使用分布式缓存方案比如 Memcached 、Redis 来缓存 session，但是要求 Memcached 或 Redis 必须是集群</li>
+<li>把 session 放到 Redis 中存储，虽然架构上变得复杂，并且需要多访问一次 Redis ，但是这种方案带来的好处也是很大的：<ul>
+<li>实现了 session 共享；</li>
+<li>可以水平扩展（增加 Redis 服务器）；</li>
+<li>服务器重启 session 不丢失（不过也要注意 session 在 Redis 中的刷新&#x2F;失效机制）；</li>
+<li>不仅可以跨服务器 session 共享，甚至可以跨平台（例如网页端和 APP 端）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
     </div>
 
     
@@ -309,7 +341,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://tony-peteryu.github.io/2022/10/17/Leetcode-1441-%E7%94%A8%E6%A0%88%E6%93%8D%E4%BD%9C%E6%9E%84%E5%BB%BA%E6%95%B0%E7%BB%84/" title="Leetcode-1441-用栈操作构建数组">http://tony-peteryu.github.io/2022/10/17/Leetcode-1441-用栈操作构建数组/</a>
+    <a href="http://tony-peteryu.github.io/2022/10/27/Session%E3%80%81Cookie%E3%80%81Token%E3%80%81Jwt/" title="Session、Cookie、Token、Jwt">http://tony-peteryu.github.io/2022/10/27/Session、Cookie、Token、Jwt/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -319,9 +351,6 @@
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Leetcode/" rel="tag"><i class="fa fa-tag"></i> Leetcode</a>
-          </div>
 
         
 
@@ -329,13 +358,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/10/17/Leetcode-904-%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AE/" rel="prev" title="Leetcode-904-水果成篮">
-      <i class="fa fa-chevron-left"></i> Leetcode-904-水果成篮
+    <a href="/2022/10/27/xunit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="prev" title="xunit-单元测试">
+      <i class="fa fa-chevron-left"></i> xunit-单元测试
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/10/18/Leetcode-902-%E6%9C%80%E5%A4%A7%E4%B8%BAN%E7%9A%84%E6%95%B0%E5%AD%97%E7%BB%84%E5%90%88/" rel="next" title="Leetcode-902-最大为N的数字组合">
-      Leetcode-902-最大为N的数字组合 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -393,7 +419,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">示例 3：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Cookie"><span class="nav-number">1.</span> <span class="nav-text">什么是 Cookie</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Session"><span class="nav-number">2.</span> <span class="nav-text">什么是 Session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Session%E4%B8%8ECookie%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">Session与Cookie的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Token"><span class="nav-number">4.</span> <span class="nav-text">Token</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Token-%E5%92%8C-Session-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">Token 和 Session 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8cookie%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">使用cookie需要注意的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Session%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">使用Session需要注意的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Session%E5%85%B1%E4%BA%AB%E6%96%B9%E6%A1%88"><span class="nav-number">8.</span> <span class="nav-text">Session共享方案</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

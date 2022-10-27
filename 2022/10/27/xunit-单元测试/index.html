@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/tony-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/tony-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/tony-16x16.png">
+  <link rel="mask-icon" href="/images/tony.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tony-peteryu.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+  <meta name="description" content="使用xunit进行单元测试为什么要进行自动化测试？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xunit-单元测试">
+<meta property="og:url" content="http://tony-peteryu.github.io/2022/10/27/xunit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="Tony&#39;s Blog">
+<meta property="og:description" content="使用xunit进行单元测试为什么要进行自动化测试？">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-27T06:18:24.000Z">
+<meta property="article:modified_time" content="2022-10-27T06:19:28.028Z">
+<meta property="article:author" content="Tony">
+<meta property="article:tag" content="测试">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://tony-peteryu.github.io/2022/10/27/xunit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>xunit-单元测试 | Tony's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tony's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">欢迎您的到来,阅读愉快</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tony-peteryu.github.io/2022/10/27/xunit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tony.svg">
+      <meta itemprop="name" content="Tony">
+      <meta itemprop="description" content="不要停止奔跑,不要回顾来路,来路无可眷恋,值得期待的只有远方!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tony's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          xunit-单元测试
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-27 14:18:24 / 修改时间：14:19:28" itemprop="dateCreated datePublished" datetime="2022-10-27T14:18:24+08:00">2022-10-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NetCore/" itemprop="url" rel="index"><span itemprop="name">NetCore</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="使用xunit进行单元测试"><a href="#使用xunit进行单元测试" class="headerlink" title="使用xunit进行单元测试"></a>使用xunit进行单元测试</h3><h4 id="为什么要进行自动化测试？"><a href="#为什么要进行自动化测试？" class="headerlink" title="为什么要进行自动化测试？"></a>为什么要进行自动化测试？</h4><span id="more"></span>
+
+<ul>
+<li><p>手工测试的局限性</p>
+<ul>
+<li>手工测试不能覆盖所有代码路径。</li>
+<li>基本的功能性测试用例在每一轮测试中都不能少。由于工作量往往较大，属于重复性的、非智力性的和非创造性，并要求准确细致，使用机器比人类更有优势。</li>
+<li>许多死锁、资源冲突、多线程等有关的不正确 ，通过手工测试很难捕捉到。</li>
+<li>系统压力、性能测试，需要模拟大数据或大并发用户等各种测试场景，很难通过手工测试执行。</li>
+<li>系统可靠性测试，需要模拟系统长时间运行，以验证系统能否稳定运行，难以通过手工测试执行。</li>
+<li>如果有大量（几千）的测试用例，须要在短时间内（1天）完成，手工测试几乎不可能做到。</li>
+</ul>
+</li>
+<li><p>自动化测试的优点</p>
+<ul>
+<li>避免重复工作：对于功能已经完整和成熟的软件，每发布一个新的版本，其中大部分功能和界面都和上一个版本相似或完全相同，这部分功能特别适合于自动化测试，从而可以让测试达到测试每个特征的目的。</li>
+<li>提高测试效率：DCC版本的发布周期往往比较短，也就是开发周期只有短短的几个月，而在测试期间是每天&#x2F;每2天都要发布一个版本供测试人员测试，一个系统的功能点有几千个上万个，人工测试是非常的耗时和繁琐，这样必然会使测试效率低下。</li>
+<li>保证每次测试的一致性和可重复性：由于每次自动化测试运行的脚本是相同的，所以每次执行的测试具有一致性，人是很难做到的。由于自动化测试的一致性，很容易发现被测软件的任何改变。</li>
+<li>更好的利用资源－－周未&#x2F;晚上。理想的自动化测试能够按计划完全自动的运行，在开发人员和测试人员不可能实行三班倒的情况下， 自动化测试可以胜任这个任务， 完全可以在周末和晚上执行测试。这样充分的利用了公司的资源，也避免了开发和测试之间的等待。</li>
+<li>解决测试与开发之间的矛盾：通常在开发的末期，进入集成测试阶段，由于每发布一个版本的初期，测试系统的错误比较少，这时开发人员在等待测试人员测试出错误的时间。事实上在迭代周期很短的开发模式中，存在更多的矛盾，但自动化测试可以解决其中的主要矛盾。</li>
+</ul>
+</li>
+</ul>
+<h4 id="自动化测试的分类"><a href="#自动化测试的分类" class="headerlink" title="自动化测试的分类"></a>自动化测试的分类</h4><ul>
+<li>Unit Test 单元测试， 它可以测试一个类，或者一个类的某个功能，它具有很好的深度，但是对整个应用来说它不具备很好的覆盖面。</li>
+<li>Integration Test 集成测试，它没有单元测试那么细致，但是具有相对较好的测试覆盖面。例如它可以测试功能的组合，以及像数据库或文件系统这样的外部资源等。</li>
+<li>Subcutaneous Test 皮下测试，这种测试作用于UI层的下面一层，这也意味着它对整个应用来说有很好的覆盖率，但是深度欠佳。那一个MVC结构的应用来说，它就是针对刚好在Controller下面一层的测试，对于Web service来说，它就是对节点下面那层的测试。</li>
+<li>UI测试，它的测试覆盖面很广，直接从UI层面进行测试，但是深度欠佳。</li>
+</ul>
+<h4 id="测试的三个阶段AAA"><a href="#测试的三个阶段AAA" class="headerlink" title="测试的三个阶段AAA"></a>测试的三个阶段AAA</h4><ul>
+<li>Arrange，这里做一些先决的设定。例如创建对象实例，数据，输入等等。</li>
+<li>Act，在这里执行生产代码并返回结果。例如调用方法，或者设置属性（Properties）。</li>
+<li>Assert，在这里检查结果。测试通过或者失败。</li>
+</ul>
+<h4 id="xunit进行单元测试——Assert"><a href="#xunit进行单元测试——Assert" class="headerlink" title="xunit进行单元测试——Assert"></a>xunit进行单元测试——Assert</h4><p>Assert：Assert基于代码的返回值、对象的最终状态、事件是否发生等情况来评估测试的结果。Assert的结果可能是Pass或者Fail。如果所有的asserts都pass了，那么整个测试就pass了；如果有任何assert fail了，那么测试就fail了。<br>xUnit提供了以下类型的Assert：</p>
+<ul>
+<li>boolean：True&#x2F;False</li>
+<li>String：相等&#x2F;不等，是否为空，以..开始&#x2F;结束，是否包含子字符串，匹配正则表达式</li>
+<li>数值型：相等&#x2F;不等，是否在某个范围内，浮点的精度</li>
+<li>Collection：内容是否相等，是否包含某个元素，是否包含满足某种条件(predicate)的元素，是否所有的元素都满足某个assert</li>
+<li>Raised events：Custom events，Framework events(例如：PropertyChanged)</li>
+<li>Object Type：是否是某种类型，是否某种类型或继承与某种类型</li>
+</ul>
+<h5 id="boolean-Assert"><a href="#boolean-Assert" class="headerlink" title="boolean Assert"></a>boolean Assert</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断是否为true</span></span><br><span class="line">Assert.Ture(<span class="built_in">bool</span> condition)</span><br><span class="line"><span class="comment">//判断是否为false</span></span><br><span class="line">Assert.False(<span class="built_in">bool</span> condition)</span><br></pre></td></tr></table></figure>
+
+<h5 id="string-Assert"><a href="#string-Assert" class="headerlink" title="string Assert"></a>string Assert</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断是否相等</span></span><br><span class="line">Assert.Equal(<span class="built_in">string</span> expected, <span class="built_in">string</span> actual)</span><br><span class="line"><span class="comment">//判断是否不等</span></span><br><span class="line">Assert.NotEqual(<span class="built_in">string</span> expected, <span class="built_in">string</span> actual)</span><br><span class="line"><span class="comment">//判断是否为空</span></span><br><span class="line">Assert.Null(<span class="built_in">string</span> expected)</span><br><span class="line">Assert.NotNull(<span class="built_in">string</span> expected)</span><br><span class="line"><span class="comment">//以..开始/结束</span></span><br><span class="line">Assert.StartsWith(<span class="built_in">string</span> expectedStartString, <span class="built_in">string</span> actualString)</span><br><span class="line">Assert.EndsWith(<span class="built_in">string</span> expectedStartString, <span class="built_in">string</span> actualString)</span><br><span class="line"><span class="comment">//是否包含某个字符串</span></span><br><span class="line">Assert.Contains(<span class="built_in">string</span> expectedSubstring, <span class="built_in">string</span> actualString)</span><br><span class="line"><span class="comment">//匹配正则表达式</span></span><br><span class="line">Assert.Matches(Regex expectedRegex, <span class="built_in">string</span> actualString)</span><br></pre></td></tr></table></figure>
+
+<h5 id="数值-Assert"><a href="#数值-Assert" class="headerlink" title="数值 Assert"></a>数值 Assert</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//相等/不等</span></span><br><span class="line">Assert.Equal&lt;T&gt;(T expected, T actual)</span><br><span class="line">Assert.NotEqual&lt;T&gt;(T expected, T actual)</span><br><span class="line"><span class="comment">//是否在某个范围内</span></span><br><span class="line">Assert.InRange&lt;T&gt;(T actual, T low, T high)</span><br><span class="line"><span class="comment">//浮点的精度</span></span><br><span class="line">Assert.Equal(<span class="built_in">double</span> expected, <span class="built_in">double</span> actual, <span class="built_in">int</span> precision)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Collection-Assert"><a href="#Collection-Assert" class="headerlink" title="Collection Assert"></a>Collection Assert</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//是否包含某个元素</span></span><br><span class="line">Assert.Contains&lt;T&gt;(T expected, IEnumerable&lt;T&gt; collection)</span><br><span class="line"><span class="comment">//是否包含满足某种条件(predicate)的元素</span></span><br><span class="line">Assert.Contains&lt;T&gt;(IEnumerable&lt;T&gt; collection, Predicate&lt;T&gt; filter)</span><br><span class="line"><span class="comment">//是否所有的元素都满足某个assert</span></span><br><span class="line">Assert.All&lt;T&gt;(IEnumerable&lt;T&gt; collection, Action&lt;T&gt; action)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Object-Type-Assert"><a href="#Object-Type-Assert" class="headerlink" title="Object Type Assert"></a>Object Type Assert</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//是否是某种类型</span></span><br><span class="line">Assert.IsType&lt;T&gt;(<span class="built_in">object</span> @object)</span><br><span class="line"><span class="comment">//是否某种类型或继承与某种类型</span></span><br><span class="line">Assert.IsAssignableFrom&lt;祖先类&gt;(xx):</span><br><span class="line"><span class="comment">//判断两个引用是否指向不同的实例 </span></span><br><span class="line">Assert.NotSame(a, b):</span><br></pre></td></tr></table></figure>
+
+<h5 id="异常-Assert"><a href="#异常-Assert" class="headerlink" title="异常 Assert"></a>异常 Assert</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Assert是否抛出了特定类型的异常.</span></span><br><span class="line">Assert.Throws&lt;ArgumentNullException&gt;(...)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Assert-Events-是否发生-Raised"><a href="#Assert-Events-是否发生-Raised" class="headerlink" title="Assert Events 是否发生(Raised)"></a>Assert Events 是否发生(Raised)</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Assert.Raises&lt;T&gt;()</span><br><span class="line"><span class="comment">//断定PropertyChanged的Event是否被触发了.</span></span><br><span class="line">Assert.PropertyChanged(..) </span><br></pre></td></tr></table></figure>
+
+<h4 id="xunit进行单元测试——Attribute"><a href="#xunit进行单元测试——Attribute" class="headerlink" title="xunit进行单元测试——Attribute"></a>xunit进行单元测试——Attribute</h4><p>xunit中常用的框架属性</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[fact]</td>
+<td>标记测试方法，即类中的实际测试</td>
+</tr>
+<tr>
+<td>[Trait]</td>
+<td>在测试中设置任意元数据</td>
+</tr>
+<tr>
+<td>[Fact(DisplayName &#x3D;”name”))]</td>
+<td>在属性上设置 DisplayName 参数修改显示名称。</td>
+</tr>
+<tr>
+<td>[Fact(Skip&#x3D;”reason”)]</td>
+<td>在属性上设置 Skip 参数以暂时跳过测试。</td>
+</tr>
+<tr>
+<td>[Theory]</td>
+<td>当必须执行数据驱动的测试时，将使用此属性。在这种情况下，必须使用[理论]而不是[事实]属性</td>
+</tr>
+<tr>
+<td>[InlineData]</td>
+<td>此属性与 [Theory] 属性一起使用，以提供将对其执行参数化测试的数据子集。</td>
+</tr>
+<tr>
+<td>[ClassData]</td>
+<td>当传递给 [Theory] 测试的参数不是常量时，将使用此属性。</td>
+</tr>
+<tr>
+<td>[MemberData]</td>
+<td>测试多组参数</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Tony
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://tony-peteryu.github.io/2022/10/27/xunit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="xunit-单元测试">http://tony-peteryu.github.io/2022/10/27/xunit-单元测试/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B5%8B%E8%AF%95/" rel="tag"><i class="fa fa-tag"></i> 测试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/27/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98/" rel="prev" title="高并发下的数据库与缓存一致性问题">
+      <i class="fa fa-chevron-left"></i> 高并发下的数据库与缓存一致性问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/27/Session%E3%80%81Cookie%E3%80%81Token%E3%80%81Jwt/" rel="next" title="Session、Cookie、Token、Jwt">
+      Session、Cookie、Token、Jwt <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8xunit%E8%BF%9B%E8%A1%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">使用xunit进行单元测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%9B%E8%A1%8C%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要进行自动化测试？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">自动化测试的分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%9A%84%E4%B8%89%E4%B8%AA%E9%98%B6%E6%AE%B5AAA"><span class="nav-number">1.3.</span> <span class="nav-text">测试的三个阶段AAA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xunit%E8%BF%9B%E8%A1%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E2%80%94%E2%80%94Assert"><span class="nav-number">1.4.</span> <span class="nav-text">xunit进行单元测试——Assert</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#boolean-Assert"><span class="nav-number">1.4.1.</span> <span class="nav-text">boolean Assert</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#string-Assert"><span class="nav-number">1.4.2.</span> <span class="nav-text">string Assert</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E5%80%BC-Assert"><span class="nav-number">1.4.3.</span> <span class="nav-text">数值 Assert</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Collection-Assert"><span class="nav-number">1.4.4.</span> <span class="nav-text">Collection Assert</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Object-Type-Assert"><span class="nav-number">1.4.5.</span> <span class="nav-text">Object Type Assert</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8-Assert"><span class="nav-number">1.4.6.</span> <span class="nav-text">异常 Assert</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Assert-Events-%E6%98%AF%E5%90%A6%E5%8F%91%E7%94%9F-Raised"><span class="nav-number">1.4.7.</span> <span class="nav-text">Assert Events 是否发生(Raised)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xunit%E8%BF%9B%E8%A1%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E2%80%94%E2%80%94Attribute"><span class="nav-number">1.5.</span> <span class="nav-text">xunit进行单元测试——Attribute</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tony"
+      src="/images/tony.svg">
+  <p class="site-author-name" itemprop="name">Tony</p>
+  <div class="site-description" itemprop="description">不要停止奔跑,不要回顾来路,来路无可眷恋,值得期待的只有远方!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=300 height=110 src="//music.163.com/outchain/player?type=0&id=404203653&auto=1&height=90"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tony</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
