@@ -41,29 +41,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Leetcode-453-最小操作次数使数组元素相等</title>
-    <url>/2022/10/12/Leetcode-453-%E6%9C%80%E5%B0%8F%E6%93%8D%E4%BD%9C%E6%AC%A1%E6%95%B0%E4%BD%BF%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%9B%B8%E7%AD%89/</url>
-    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个长度为 n 的整数数组，每次操作将会使 n - 1 个元素增加 1 。返回让数组所有元素相等的最小操作次数。</p>
-<span id="more"></span>
-
-<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：nums = [1,2,3]</span><br><span class="line">输出：3</span><br><span class="line">解释：</span><br><span class="line">只需要3次操作（注意每次操作会增加两个元素的值）：</span><br><span class="line">[1,2,3]  =&gt;  [2,3,3]  =&gt;  [3,4,3]  =&gt;  [4,4,4]</span><br></pre></td></tr></table></figure>
-
-<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：nums = [1,1,1]</span><br><span class="line">输出：0</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>提示<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">n == nums.length</span><br><span class="line">1 &lt;= nums.length &lt;= 105</span><br><span class="line">-109 &lt;= nums[i] &lt;= 109</span><br><span class="line">答案保证符合 32-bit 整数</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>题目为每次操作将会让 n - 1 个元素增加 1 ，反着理解的话即为每次将 1 个元素减少 1 让数组中元素相等，这样就变为了数组中所有元素变为数组中最小元素需要的次数，先获取最小值，然后差值求和</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">MinMoves</span>(<span class="params"><span class="built_in">int</span>[] nums</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> minNum = nums[<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//此处用于获取数组中的最小元素</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        minNum = Math.Min(minNum, nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//差值求和</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt;nums.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        result += (nums[i]=minNum);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Leetcode-1611-使整数变为0的最少操作次数</title>
     <url>/2022/10/13/Leetcode-1611-%E4%BD%BF%E6%95%B4%E6%95%B0%E5%8F%98%E4%B8%BA0%E7%9A%84%E6%9C%80%E5%B0%91%E6%93%8D%E4%BD%9C%E6%AC%A1%E6%95%B0/</url>
     <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个整数<code>n</code>，你需要重复执行多次下述操作将其转换为<code>0</code>：</p>
@@ -100,32 +77,71 @@
       </tags>
   </entry>
   <entry>
-    <title>Leetcode-76-最小覆盖子串</title>
-    <url>/2022/10/21/Leetcode-76-%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2/</url>
-    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个字符串<code>s</code>、一个字符串<code>t</code>。返回<code>s</code>中涵盖<code>t</code>所有字符的最小子串。如果<code>s</code>中不存在涵盖<code>t</code>所有字符的子串，则返回空字符串<code>&quot;&quot;</code>。</p>
+    <title>Leetcode-1953-你可以工作的最大周数</title>
+    <url>/2022/10/19/Leetcode-1953-%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%B7%A5%E4%BD%9C%E7%9A%84%E6%9C%80%E5%A4%A7%E5%91%A8%E6%95%B0/</url>
+    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你<code>n</code>个项目，编号从<code>0</code>到<code>n - 1</code>。同时给你一个整数数组<code>milestones</code>，其中每个<code>milestones[i]</code>表示第<code>i</code>个项目中的阶段任务数量。</p>
+<span id="more"></span>
+<p>你可以按下面两个规则参与项目中的工作：</p>
+<p>每周，你将会完成<strong>某一个</strong>项目中的<strong>恰好一个</strong>阶段任务。你每周都<strong>必须</strong>工作。<br>在<strong>连续的</strong>两周中，你<strong>不能</strong>参与并完成同一个项目中的两个阶段任务。<br>一旦所有项目中的全部阶段任务都完成，或者仅剩余一个阶段任务都会导致你违反上面的规则，那么你将<strong>停止工作</strong>。注意，由于这些条件的限制，你可能无法完成所有阶段任务。</p>
+<p>返回在不违反上面规则的情况下你<strong>最多</strong>能工作多少周。</p>
+<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：milestones = [1,2,3]</span><br><span class="line">输出：6</span><br><span class="line">解释：一种可能的情形是：</span><br><span class="line">​​​​- 第 1 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 2 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 3 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 4 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 5 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 6 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">总周数是 6 。</span><br></pre></td></tr></table></figure>
+
+<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：milestones = [5,2,1]</span><br><span class="line">输出：7</span><br><span class="line">解释：一种可能的情形是：</span><br><span class="line">- 第 1 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 2 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 3 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 4 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 5 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 6 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 7 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">总周数是 7 。</span><br><span class="line">注意，你不能在第 8 周参与完成项目 0 中的最后一个阶段任务，因为这会违反规则。</span><br><span class="line">因此，项目 0 中会有一个阶段任务维持未完成状态。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>提示<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">n == milestones.length</span><br><span class="line">1 &lt;= n &lt;= 105</span><br><span class="line">1 &lt;= milestones[i] &lt;= 109</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>本题采用贪心法的思路去处理，我们处理花费时长最多的项目，我们再处理该项目的时候，中间会插入其他项目</p>
+<ul>
+<li>若此时其他项目的总花费时间小于该项目时间，则最终工作时间为（其他项目时间总和*2）+1</li>
+<li>若此时其他项目的总花费时间大于该项目时间，则一定可以穿插完成所有项目，即最终工作时间为所有项目时间总和</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">long</span> <span class="title">NumberOfWeeks</span>(<span class="params"><span class="built_in">int</span>[] milestones</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    Array.Sort(milestones);</span><br><span class="line">    <span class="built_in">long</span> temp = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> maxNum = milestones[milestones.Length - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; milestones.Length<span class="number">-1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        temp += milestones[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxNum &gt; temp ? (<span class="number">2</span>*temp+<span class="number">1</span>) : maxNum+temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode-453-最小操作次数使数组元素相等</title>
+    <url>/2022/10/12/Leetcode-453-%E6%9C%80%E5%B0%8F%E6%93%8D%E4%BD%9C%E6%AC%A1%E6%95%B0%E4%BD%BF%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%9B%B8%E7%AD%89/</url>
+    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个长度为 n 的整数数组，每次操作将会使 n - 1 个元素增加 1 。返回让数组所有元素相等的最小操作次数。</p>
 <span id="more"></span>
 
-<p>注意：</p>
-<p>对<code>t</code>中重复字符，我们寻找的子字符串中该字符数量必须不少于<code>t</code>中该字符数量。<br>如果<code>s</code>中存在这样的子串，我们保证它是唯一的答案。</p>
-<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;ADOBECODEBANC&quot;</span>, t = <span class="string">&quot;ABC&quot;</span></span><br><span class="line">输出：<span class="string">&quot;BANC&quot;</span></span><br></pre></td></tr></table></figure>
+<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：nums = [1,2,3]</span><br><span class="line">输出：3</span><br><span class="line">解释：</span><br><span class="line">只需要3次操作（注意每次操作会增加两个元素的值）：</span><br><span class="line">[1,2,3]  =&gt;  [2,3,3]  =&gt;  [3,4,3]  =&gt;  [4,4,4]</span><br></pre></td></tr></table></figure>
 
-<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;a&quot;</span>, t = <span class="string">&quot;a&quot;</span></span><br><span class="line">输出：<span class="string">&quot;a&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="示例-3"><a href="#示例-3" class="headerlink" title="示例 3:"></a>示例 3:</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入: s = <span class="string">&quot;a&quot;</span>, t = <span class="string">&quot;aa&quot;</span></span><br><span class="line">输出: <span class="string">&quot;&quot;</span></span><br><span class="line">解释: t 中两个字符 <span class="string">&#x27;a&#x27;</span> 均应包含在 s 的子串中，</span><br><span class="line">因此没有符合条件的子字符串，返回空字符串。</span><br></pre></td></tr></table></figure>
+<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：nums = [1,1,1]</span><br><span class="line">输出：0</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>提示<br>1 &lt;&#x3D; s.length, t.length &lt;&#x3D; 105<br>s 和 t 由英文字母组成</li>
+<li>提示<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">n == nums.length</span><br><span class="line">1 &lt;= nums.length &lt;= 105</span><br><span class="line">-109 &lt;= nums[i] &lt;= 109</span><br><span class="line">答案保证符合 32-bit 整数</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>此题采用滑动窗口思想</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>题目为每次操作将会让 n - 1 个元素增加 1 ，反着理解的话即为每次将 1 个元素减少 1 让数组中元素相等，这样就变为了数组中所有元素变为数组中最小元素需要的次数，先获取最小值，然后差值求和</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">MinMoves</span>(<span class="params"><span class="built_in">int</span>[] nums</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> minNum = nums[<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//此处用于获取数组中的最小元素</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        minNum = Math.Min(minNum, nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//差值求和</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt;nums.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        result += (nums[i]=minNum);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode-870.优势洗牌</title>
+    <url>/2022/10/10/Leetcode-870-%E4%BC%98%E5%8A%BF%E6%B4%97%E7%89%8C/</url>
+    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定两个大小相等的数组 nums1 和 nums2，nums1 相对于 nums2 的优势可以用满足 nums1[i] &gt; nums2[i] 的索引 i 的数目来描述。</p>
+<p>返回 nums1 的任意排列，使其相对于 nums2 的优势最大化。</p>
+<span id="more"></span>
+
+<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：nums1 = [2,7,11,15], nums2 = [1,10,4,11]</span><br><span class="line">输出：[2,11,7,15]</span><br></pre></td></tr></table></figure>
+<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：nums1 = [12,24,8,32], nums2 = [13,25,32,11]</span><br><span class="line">输出：[24,32,8,12]</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>定义start,end&#x3D;0，为我们初始的滑动窗口</li>
-<li>开始循环遍历整个数组元素，判断当前end指针是否超过整个数组的长度，是退出循环，否则执行第3步</li>
-<li>然后end指针开始向右移动一个长度，并更新窗口内的区间数据</li>
-<li>当窗口区间的数据满足我们的要求时，右指针end就保持不变，左指针start开始移动，直到移动到一个不满足要求的区间时，start不再移动位置</li>
-<li>执行第2步</li>
+<li>提示：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1 &lt;= nums1.length &lt;= 105</span><br><span class="line">nums2.length == nums1.length</span><br><span class="line">0 &lt;= nums1[i], nums2[i] &lt;= 109</span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>此题的重点在于如何判断数据满足条件，即<code>s</code>的字串涵盖<code>t</code>所有字符<br>此处采用的是定义一个长度为128的数组用于存放字符出现的次数，此处也可优化，根据提示由英文字母组成，可简化数组长度<br>    - 先将目标字符串的字符初始到数组中<br>    - 遍历s，即滑动窗口并更新s数组中的元素<br>    - 当t中元素不为0时，判断s中元素是否大于t中元素值</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">MinWindow</span>(<span class="params"><span class="built_in">string</span> s, <span class="built_in">string</span> t</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span>[] sArray = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">128</span>];</span><br><span class="line">    <span class="built_in">int</span>[] tArray = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">128</span>];</span><br><span class="line">    <span class="built_in">string</span> result = <span class="built_in">string</span>.Empty;</span><br><span class="line">    <span class="built_in">int</span> start = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> end = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; t.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        tArray[t[i]] += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (end &lt; s.Length)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//移动左指针</span></span><br><span class="line">        sArray[s[end++]] += <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (EqualsArray(sArray, tArray))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//更新result值</span></span><br><span class="line">            <span class="keyword">if</span> (result == <span class="built_in">string</span>.Empty)</span><br><span class="line">            &#123;</span><br><span class="line">                result = s.Substring(start, end - start);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                result = end - start &lt; result.Length ? s.Substring(start, end - start) : result;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//移动右指针</span></span><br><span class="line">            sArray[s[start++]] -= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//此函数用于判断此时s的字串是否包含t中所有元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">EqualsArray</span>(<span class="params"><span class="built_in">int</span>[] sArray, <span class="built_in">int</span>[] tArray</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; tArray.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (tArray[i] != <span class="number">0</span> &amp;&amp; tArray[i] &gt; sArray[i])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>依据题目，要想获取优势最大化，使用田忌赛马策略，首先将数组nums1进行排序，然后获取nums2排序后的下标数组<br>然后使用双指针的策略，遍历数组，将nums1[i]与nums2[下标]进行比较，若nums1[i]较大，则赋值到下标sort_Nums2_Index[start]处，并移动start，若nums1[i]较小，则赋值到下标sort_Nums2_Index[end]处，并移动end。采用田忌赛马策略，若我的最小比你的最小大，则对上你的最小，若我的最小比你的最小小，则对上你的最大。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span>[] <span class="title">AdvantageCount</span>(<span class="params"><span class="built_in">int</span>[] nums1, <span class="built_in">int</span>[] nums2</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//将数组nums1进行排序</span></span><br><span class="line">    Array.Sort(nums1);</span><br><span class="line">    <span class="built_in">int</span>[] result = <span class="keyword">new</span> <span class="built_in">int</span>[nums1.Length];</span><br><span class="line">    <span class="built_in">int</span>[] sort_Nums2_Index = <span class="keyword">new</span> <span class="built_in">int</span>[nums1.Length];</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums1.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        sort_Nums2_Index[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//获取nums2排序后的下标数组</span></span><br><span class="line">    Array.Sort(sort_Nums2_Index, (i, j) =&gt; nums2[i] - nums2[j]);</span><br><span class="line">    <span class="built_in">int</span> start = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> end = nums1.Length - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums1.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums1[i] &gt; nums2[sort_Nums2_Index[start]])</span><br><span class="line">        &#123;</span><br><span class="line">            result[sort_Nums2_Index[start]] = nums1[i];</span><br><span class="line">            start++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            result[sort_Nums2_Index[end]] = nums1[i];</span><br><span class="line">            end--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>算法</category>
       </categories>
@@ -158,20 +174,32 @@
       </tags>
   </entry>
   <entry>
-    <title>Leetcode-870.优势洗牌</title>
-    <url>/2022/10/10/Leetcode-870-%E4%BC%98%E5%8A%BF%E6%B4%97%E7%89%8C/</url>
-    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定两个大小相等的数组 nums1 和 nums2，nums1 相对于 nums2 的优势可以用满足 nums1[i] &gt; nums2[i] 的索引 i 的数目来描述。</p>
-<p>返回 nums1 的任意排列，使其相对于 nums2 的优势最大化。</p>
+    <title>Leetcode-76-最小覆盖子串</title>
+    <url>/2022/10/21/Leetcode-76-%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2/</url>
+    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个字符串<code>s</code>、一个字符串<code>t</code>。返回<code>s</code>中涵盖<code>t</code>所有字符的最小子串。如果<code>s</code>中不存在涵盖<code>t</code>所有字符的子串，则返回空字符串<code>&quot;&quot;</code>。</p>
 <span id="more"></span>
 
-<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：nums1 = [2,7,11,15], nums2 = [1,10,4,11]</span><br><span class="line">输出：[2,11,7,15]</span><br></pre></td></tr></table></figure>
-<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：nums1 = [12,24,8,32], nums2 = [13,25,32,11]</span><br><span class="line">输出：[24,32,8,12]</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<p>对<code>t</code>中重复字符，我们寻找的子字符串中该字符数量必须不少于<code>t</code>中该字符数量。<br>如果<code>s</code>中存在这样的子串，我们保证它是唯一的答案。</p>
+<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;ADOBECODEBANC&quot;</span>, t = <span class="string">&quot;ABC&quot;</span></span><br><span class="line">输出：<span class="string">&quot;BANC&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;a&quot;</span>, t = <span class="string">&quot;a&quot;</span></span><br><span class="line">输出：<span class="string">&quot;a&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="示例-3"><a href="#示例-3" class="headerlink" title="示例 3:"></a>示例 3:</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入: s = <span class="string">&quot;a&quot;</span>, t = <span class="string">&quot;aa&quot;</span></span><br><span class="line">输出: <span class="string">&quot;&quot;</span></span><br><span class="line">解释: t 中两个字符 <span class="string">&#x27;a&#x27;</span> 均应包含在 s 的子串中，</span><br><span class="line">因此没有符合条件的子字符串，返回空字符串。</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>提示：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1 &lt;= nums1.length &lt;= 105</span><br><span class="line">nums2.length == nums1.length</span><br><span class="line">0 &lt;= nums1[i], nums2[i] &lt;= 109</span><br></pre></td></tr></table></figure></li>
+<li>提示<br>1 &lt;&#x3D; s.length, t.length &lt;&#x3D; 105<br>s 和 t 由英文字母组成</li>
 </ul>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>依据题目，要想获取优势最大化，使用田忌赛马策略，首先将数组nums1进行排序，然后获取nums2排序后的下标数组<br>然后使用双指针的策略，遍历数组，将nums1[i]与nums2[下标]进行比较，若nums1[i]较大，则赋值到下标sort_Nums2_Index[start]处，并移动start，若nums1[i]较小，则赋值到下标sort_Nums2_Index[end]处，并移动end。采用田忌赛马策略，若我的最小比你的最小大，则对上你的最小，若我的最小比你的最小小，则对上你的最大。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span>[] <span class="title">AdvantageCount</span>(<span class="params"><span class="built_in">int</span>[] nums1, <span class="built_in">int</span>[] nums2</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//将数组nums1进行排序</span></span><br><span class="line">    Array.Sort(nums1);</span><br><span class="line">    <span class="built_in">int</span>[] result = <span class="keyword">new</span> <span class="built_in">int</span>[nums1.Length];</span><br><span class="line">    <span class="built_in">int</span>[] sort_Nums2_Index = <span class="keyword">new</span> <span class="built_in">int</span>[nums1.Length];</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums1.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        sort_Nums2_Index[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//获取nums2排序后的下标数组</span></span><br><span class="line">    Array.Sort(sort_Nums2_Index, (i, j) =&gt; nums2[i] - nums2[j]);</span><br><span class="line">    <span class="built_in">int</span> start = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> end = nums1.Length - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums1.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums1[i] &gt; nums2[sort_Nums2_Index[start]])</span><br><span class="line">        &#123;</span><br><span class="line">            result[sort_Nums2_Index[start]] = nums1[i];</span><br><span class="line">            start++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            result[sort_Nums2_Index[end]] = nums1[i];</span><br><span class="line">            end--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>此题采用滑动窗口思想</p>
+<ul>
+<li>定义start,end&#x3D;0，为我们初始的滑动窗口</li>
+<li>开始循环遍历整个数组元素，判断当前end指针是否超过整个数组的长度，是退出循环，否则执行第3步</li>
+<li>然后end指针开始向右移动一个长度，并更新窗口内的区间数据</li>
+<li>当窗口区间的数据满足我们的要求时，右指针end就保持不变，左指针start开始移动，直到移动到一个不满足要求的区间时，start不再移动位置</li>
+<li>执行第2步</li>
+</ul>
+<p>此题的重点在于如何判断数据满足条件，即<code>s</code>的字串涵盖<code>t</code>所有字符<br>此处采用的是定义一个长度为128的数组用于存放字符出现的次数，此处也可优化，根据提示由英文字母组成，可简化数组长度<br>    - 先将目标字符串的字符初始到数组中<br>    - 遍历s，即滑动窗口并更新s数组中的元素<br>    - 当t中元素不为0时，判断s中元素是否大于t中元素值</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">MinWindow</span>(<span class="params"><span class="built_in">string</span> s, <span class="built_in">string</span> t</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span>[] sArray = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">128</span>];</span><br><span class="line">    <span class="built_in">int</span>[] tArray = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">128</span>];</span><br><span class="line">    <span class="built_in">string</span> result = <span class="built_in">string</span>.Empty;</span><br><span class="line">    <span class="built_in">int</span> start = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> end = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; t.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        tArray[t[i]] += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (end &lt; s.Length)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//移动左指针</span></span><br><span class="line">        sArray[s[end++]] += <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (EqualsArray(sArray, tArray))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//更新result值</span></span><br><span class="line">            <span class="keyword">if</span> (result == <span class="built_in">string</span>.Empty)</span><br><span class="line">            &#123;</span><br><span class="line">                result = s.Substring(start, end - start);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                result = end - start &lt; result.Length ? s.Substring(start, end - start) : result;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//移动右指针</span></span><br><span class="line">            sArray[s[start++]] -= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//此函数用于判断此时s的字串是否包含t中所有元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">EqualsArray</span>(<span class="params"><span class="built_in">int</span>[] sArray, <span class="built_in">int</span>[] tArray</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; tArray.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (tArray[i] != <span class="number">0</span> &amp;&amp; tArray[i] &gt; sArray[i])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>算法</category>
       </categories>
@@ -216,6 +244,49 @@
 </ul>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">AtMostNGivenDigitSet</span>(<span class="params"><span class="built_in">string</span>[] digits, <span class="built_in">int</span> n</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> tempAdd = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">string</span> target = n.ToString();</span><br><span class="line">    <span class="built_in">int</span> length = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">int</span>[] digitsTemp = <span class="keyword">new</span> <span class="built_in">int</span>[digits.Length];</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; digits.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        digitsTemp[i] = <span class="built_in">int</span>.Parse(digits[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当构成的数位数小于目标数数位的时候</span></span><br><span class="line">    <span class="keyword">while</span> (target.Length &gt; length) </span><br><span class="line">    &#123;</span><br><span class="line">        result += (<span class="built_in">int</span>)Math.Pow(digits.Length, length);</span><br><span class="line">        length++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当构成的数位数等于目标数数位的时候</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; target.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> temp = <span class="number">0</span>;</span><br><span class="line">        tempAdd = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> targetNum = <span class="built_in">int</span>.Parse(target[i].ToString());</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j &lt; digitsTemp.Length; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//若digits中的数比遍历的数字小，使用临时变量`temp`存储数量</span></span><br><span class="line">            <span class="keyword">if</span> (targetNum &gt; digitsTemp[j]) </span><br><span class="line">            &#123;</span><br><span class="line">                temp++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//若digits中的数和遍历的数字相等时，继续遍历</span></span><br><span class="line">            <span class="keyword">if</span> (targetNum == digitsTemp[j]) </span><br><span class="line">            &#123;</span><br><span class="line">                tempAdd++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        result += temp*(<span class="built_in">int</span>)Math.Pow(digits.Length, length - i - <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//若digits中的数都比遍历数字大的时候，停止遍历</span></span><br><span class="line">        <span class="keyword">if</span> (tempAdd == <span class="number">0</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;                </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//遍历到最末尾的时候，若还存在和遍历数字相等的数，需要将结果，即加上tempAdd,此时tempAdd为1</span></span><br><span class="line">    <span class="keyword">return</span> result+tempAdd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode-904-水果成篮</title>
+    <url>/2022/10/17/Leetcode-904-%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AE/</url>
+    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>你正在探访一家农场，农场从左到右种植了一排果树。这些树用一个整数数组<code>fruits</code>表示，其中<code>fruits[i]</code>是第<code>i</code>棵树上的水果 种类 。</p>
+<span id="more"></span>
+
+<p>你想要尽可能多地收集水果。然而，农场的主人设定了一些严格的规矩，你必须按照要求采摘水果：</p>
+<ul>
+<li>你只有<code>两个</code>篮子，并且每个篮子只能装 单一类型 的水果。每个篮子能够装的水果总量没有限制。</li>
+<li>你可以选择任意一棵树开始采摘，你必须从 每棵 树（包括开始采摘的树）上 恰好摘一个水果 。采摘的水果应当符合篮子中的水果类型。每采摘一次，你将会向右移动到下一棵树，并继续采摘。</li>
+<li>一旦你走到某棵树前，但水果不符合篮子的水果类型，那么就必须停止采摘。</li>
+</ul>
+<p>给你一个整数数组<code>fruits</code>，返回你可以收集的水果的<code>最大</code>数目。</p>
+<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：fruits = [1,2,1]</span><br><span class="line">输出：3</span><br><span class="line">解释：可以采摘全部 3 棵树。</span><br></pre></td></tr></table></figure>
+
+<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：fruits = [0,1,2,2]</span><br><span class="line">输出：3</span><br><span class="line">解释：可以采摘 [1,2,2] 这三棵树。</span><br><span class="line">如果从第一棵树开始采摘，则只能采摘 [0,1] 这两棵树。</span><br></pre></td></tr></table></figure>
+
+<h4 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：fruits = [1,2,3,2,2]</span><br><span class="line">输出：4</span><br><span class="line">解释：可以采摘 [2,3,2,2] 这四棵树。</span><br><span class="line">如果从第一棵树开始采摘，则只能采摘 [1,2] 这两棵树。</span><br></pre></td></tr></table></figure>
+
+<h4 id="示例-4："><a href="#示例-4：" class="headerlink" title="示例 4："></a>示例 4：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：fruits = [3,3,3,1,2,1,1,2,3,3,4]</span><br><span class="line">输出：5</span><br><span class="line">解释：可以采摘 [1,2,1,1,2] 这五棵树。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>提示<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1 &lt;= fruits.length &lt;= 105</span><br><span class="line">0 &lt;= fruits[i] &lt; fruits.length</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>此题采用滑动窗口算法的思路</p>
+<ul>
+<li>定义start,end&#x3D;0，为我们初始的滑动窗口</li>
+<li>开始循环遍历整个数组元素，判断当前end指针是否超过整个数组的长度，是退出循环，否则执行第3步</li>
+<li>然后end指针开始向右移动一个长度，并更新窗口内的区间数据</li>
+<li>当窗口区间的数据不满足我们的要求时，右指针end就保持不变，左指针start开始移动，直到移动到一个满足要求的区间时，start不再移动位置</li>
+<li>执行第2步</li>
+</ul>
+<p><code>例</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fruits = [3,3,3,1,2,1,1,2,3,3,4]</span><br><span class="line">end 移动 窗口元素为[3]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[3,3]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[3,3,3]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[3,3,3,1]，满足仅有两个元素的要求     result=4</span><br><span class="line">end 移动 窗口元素为[3,3,3,1,2]，不满足仅有两个元素的要求 </span><br><span class="line">start 移动 窗口元素为[3,3,1,2]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[3,1,2]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[1,2]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[1,2,1]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[1,2,1,1]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[1,2,1,1,2]，满足仅有两个元素的要求      result=5</span><br><span class="line">end 移动 窗口元素为[1,2,1,1,2,3]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[2,1,1,2,3]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[1,1,2,3]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[1,2,3]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[2,3]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[2,3,3]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[2,3,3,4]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[3,3,4]，满足仅有两个元素的要求</span><br><span class="line">结束</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">TotalFruit</span>(<span class="params"><span class="built_in">int</span>[] fruits</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> start = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> end = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> result = <span class="number">0</span>;</span><br><span class="line">    Dictionary&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt; pairs = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt;();</span><br><span class="line">    <span class="comment">//判断当前end指针是否超过整个数组的长度</span></span><br><span class="line">    <span class="keyword">while</span> (end &lt; fruits.Length) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> temp = fruits[end++];</span><br><span class="line">        <span class="keyword">if</span> (!pairs.ContainsKey(temp))</span><br><span class="line">        &#123;</span><br><span class="line">            pairs.Add(temp, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            pairs[temp] += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//当窗口区间的数据不满足我们的要求时，左指针start开始移动</span></span><br><span class="line">        <span class="keyword">while</span> (pairs.Count &gt; <span class="number">2</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> tempend = fruits[start++];</span><br><span class="line">            <span class="keyword">if</span> (pairs[tempend] == <span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                pairs.Remove(tempend);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">            &#123;</span><br><span class="line">                pairs[tempend] -= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        result = Math.Max(end-start, result);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>算法</category>
       </categories>
@@ -419,77 +490,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Leetcode-904-水果成篮</title>
-    <url>/2022/10/17/Leetcode-904-%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AE/</url>
-    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>你正在探访一家农场，农场从左到右种植了一排果树。这些树用一个整数数组<code>fruits</code>表示，其中<code>fruits[i]</code>是第<code>i</code>棵树上的水果 种类 。</p>
-<span id="more"></span>
-
-<p>你想要尽可能多地收集水果。然而，农场的主人设定了一些严格的规矩，你必须按照要求采摘水果：</p>
-<ul>
-<li>你只有<code>两个</code>篮子，并且每个篮子只能装 单一类型 的水果。每个篮子能够装的水果总量没有限制。</li>
-<li>你可以选择任意一棵树开始采摘，你必须从 每棵 树（包括开始采摘的树）上 恰好摘一个水果 。采摘的水果应当符合篮子中的水果类型。每采摘一次，你将会向右移动到下一棵树，并继续采摘。</li>
-<li>一旦你走到某棵树前，但水果不符合篮子的水果类型，那么就必须停止采摘。</li>
-</ul>
-<p>给你一个整数数组<code>fruits</code>，返回你可以收集的水果的<code>最大</code>数目。</p>
-<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：fruits = [1,2,1]</span><br><span class="line">输出：3</span><br><span class="line">解释：可以采摘全部 3 棵树。</span><br></pre></td></tr></table></figure>
-
-<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：fruits = [0,1,2,2]</span><br><span class="line">输出：3</span><br><span class="line">解释：可以采摘 [1,2,2] 这三棵树。</span><br><span class="line">如果从第一棵树开始采摘，则只能采摘 [0,1] 这两棵树。</span><br></pre></td></tr></table></figure>
-
-<h4 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：fruits = [1,2,3,2,2]</span><br><span class="line">输出：4</span><br><span class="line">解释：可以采摘 [2,3,2,2] 这四棵树。</span><br><span class="line">如果从第一棵树开始采摘，则只能采摘 [1,2] 这两棵树。</span><br></pre></td></tr></table></figure>
-
-<h4 id="示例-4："><a href="#示例-4：" class="headerlink" title="示例 4："></a>示例 4：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：fruits = [3,3,3,1,2,1,1,2,3,3,4]</span><br><span class="line">输出：5</span><br><span class="line">解释：可以采摘 [1,2,1,1,2] 这五棵树。</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>提示<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1 &lt;= fruits.length &lt;= 105</span><br><span class="line">0 &lt;= fruits[i] &lt; fruits.length</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>此题采用滑动窗口算法的思路</p>
-<ul>
-<li>定义start,end&#x3D;0，为我们初始的滑动窗口</li>
-<li>开始循环遍历整个数组元素，判断当前end指针是否超过整个数组的长度，是退出循环，否则执行第3步</li>
-<li>然后end指针开始向右移动一个长度，并更新窗口内的区间数据</li>
-<li>当窗口区间的数据不满足我们的要求时，右指针end就保持不变，左指针start开始移动，直到移动到一个满足要求的区间时，start不再移动位置</li>
-<li>执行第2步</li>
-</ul>
-<p><code>例</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fruits = [3,3,3,1,2,1,1,2,3,3,4]</span><br><span class="line">end 移动 窗口元素为[3]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[3,3]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[3,3,3]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[3,3,3,1]，满足仅有两个元素的要求     result=4</span><br><span class="line">end 移动 窗口元素为[3,3,3,1,2]，不满足仅有两个元素的要求 </span><br><span class="line">start 移动 窗口元素为[3,3,1,2]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[3,1,2]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[1,2]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[1,2,1]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[1,2,1,1]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[1,2,1,1,2]，满足仅有两个元素的要求      result=5</span><br><span class="line">end 移动 窗口元素为[1,2,1,1,2,3]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[2,1,1,2,3]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[1,1,2,3]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[1,2,3]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[2,3]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[2,3,3]，满足仅有两个元素的要求</span><br><span class="line">end 移动 窗口元素为[2,3,3,4]，不满足仅有两个元素的要求</span><br><span class="line">start 移动 窗口元素为[3,3,4]，满足仅有两个元素的要求</span><br><span class="line">结束</span><br></pre></td></tr></table></figure>
-
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">TotalFruit</span>(<span class="params"><span class="built_in">int</span>[] fruits</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> start = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> end = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> result = <span class="number">0</span>;</span><br><span class="line">    Dictionary&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt; pairs = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt;();</span><br><span class="line">    <span class="comment">//判断当前end指针是否超过整个数组的长度</span></span><br><span class="line">    <span class="keyword">while</span> (end &lt; fruits.Length) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> temp = fruits[end++];</span><br><span class="line">        <span class="keyword">if</span> (!pairs.ContainsKey(temp))</span><br><span class="line">        &#123;</span><br><span class="line">            pairs.Add(temp, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            pairs[temp] += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//当窗口区间的数据不满足我们的要求时，左指针start开始移动</span></span><br><span class="line">        <span class="keyword">while</span> (pairs.Count &gt; <span class="number">2</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> tempend = fruits[start++];</span><br><span class="line">            <span class="keyword">if</span> (pairs[tempend] == <span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                pairs.Remove(tempend);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">            &#123;</span><br><span class="line">                pairs[tempend] -= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        result = Math.Max(end-start, result);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode-1953-你可以工作的最大周数</title>
-    <url>/2022/10/19/Leetcode-1953-%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%B7%A5%E4%BD%9C%E7%9A%84%E6%9C%80%E5%A4%A7%E5%91%A8%E6%95%B0/</url>
-    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你<code>n</code>个项目，编号从<code>0</code>到<code>n - 1</code>。同时给你一个整数数组<code>milestones</code>，其中每个<code>milestones[i]</code>表示第<code>i</code>个项目中的阶段任务数量。</p>
-<span id="more"></span>
-<p>你可以按下面两个规则参与项目中的工作：</p>
-<p>每周，你将会完成<strong>某一个</strong>项目中的<strong>恰好一个</strong>阶段任务。你每周都<strong>必须</strong>工作。<br>在<strong>连续的</strong>两周中，你<strong>不能</strong>参与并完成同一个项目中的两个阶段任务。<br>一旦所有项目中的全部阶段任务都完成，或者仅剩余一个阶段任务都会导致你违反上面的规则，那么你将<strong>停止工作</strong>。注意，由于这些条件的限制，你可能无法完成所有阶段任务。</p>
-<p>返回在不违反上面规则的情况下你<strong>最多</strong>能工作多少周。</p>
-<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：milestones = [1,2,3]</span><br><span class="line">输出：6</span><br><span class="line">解释：一种可能的情形是：</span><br><span class="line">​​​​- 第 1 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 2 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 3 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 4 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 5 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 6 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">总周数是 6 。</span><br></pre></td></tr></table></figure>
-
-<h4 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">输入：milestones = [5,2,1]</span><br><span class="line">输出：7</span><br><span class="line">解释：一种可能的情形是：</span><br><span class="line">- 第 1 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 2 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 3 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 4 周，你参与并完成项目 1 中的一个阶段任务。</span><br><span class="line">- 第 5 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">- 第 6 周，你参与并完成项目 2 中的一个阶段任务。</span><br><span class="line">- 第 7 周，你参与并完成项目 0 中的一个阶段任务。</span><br><span class="line">总周数是 7 。</span><br><span class="line">注意，你不能在第 8 周参与完成项目 0 中的最后一个阶段任务，因为这会违反规则。</span><br><span class="line">因此，项目 0 中会有一个阶段任务维持未完成状态。</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>提示<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">n == milestones.length</span><br><span class="line">1 &lt;= n &lt;= 105</span><br><span class="line">1 &lt;= milestones[i] &lt;= 109</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>本题采用贪心法的思路去处理，我们处理花费时长最多的项目，我们再处理该项目的时候，中间会插入其他项目</p>
-<ul>
-<li>若此时其他项目的总花费时间小于该项目时间，则最终工作时间为（其他项目时间总和*2）+1</li>
-<li>若此时其他项目的总花费时间大于该项目时间，则一定可以穿插完成所有项目，即最终工作时间为所有项目时间总和</li>
-</ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">long</span> <span class="title">NumberOfWeeks</span>(<span class="params"><span class="built_in">int</span>[] milestones</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    Array.Sort(milestones);</span><br><span class="line">    <span class="built_in">long</span> temp = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> maxNum = milestones[milestones.Length - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; milestones.Length<span class="number">-1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        temp += milestones[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxNum &gt; temp ? (<span class="number">2</span>*temp+<span class="number">1</span>) : maxNum+temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>NetCore-WebApi统一包装返回结果</title>
     <url>/2022/10/27/NetCore-WebApi%E7%BB%9F%E4%B8%80%E5%8C%85%E8%A3%85%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C/</url>
     <content><![CDATA[<h5 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h5><p>在项目开发的过程中，在项目初期进行项目搭建的时候，应该尽可能让项目变得完善且更加好用，这一点涉及的方面很多，有许多在项目开发前期没有考虑周全导致后期维护成本大大增加，本文主要是对Net Core中返回结果统一包装的处理</p>
@@ -607,91 +607,59 @@
 ]]></content>
   </entry>
   <entry>
-    <title>高并发下的数据库与缓存一致性问题</title>
-    <url>/2022/10/27/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>在互联网业务中，传统的直接访问数据库方式，主要是通过数据分片，一写多读的方式去抗住数据流量，但是随着数据量的激增，并且大多数都是读多写少的场景 ，仅仅依靠数据库查询，成本高，效率低，且稳定性远远不够。因此，在架构设计中，常采用增加缓存层来提高系统的响应能力，提升数据读写性能、减少数据库访问压力，从而提升业务的稳定性和访问体验。<br>引入缓存又带来了新的问题，那就是数据库与缓存一致性的问题，该问题不局限于语言，是个公共问题，尤其在高并发的情况下很容易出现该问题。</p>
+    <title>NetCore自定义json序列化</title>
+    <url>/2022/11/09/NetCore%E8%87%AA%E5%AE%9A%E4%B9%89json%E5%BA%8F%E5%88%97%E5%8C%96/</url>
+    <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在进行项目开发的过程中，序列化与反序列化是会经常遇到的场景，在 <code>net core</code> 项目开发中，通常使用 <code>Newtonsoft.Json</code> 包中的进行序列化和反序列操作，这个包中的 <code>SerializeObject</code> (序列化)和 <code>DeserializeObject</code>（反序列化）能解决业务场景中90%以上的问题，但是开发过程中还是会遇到剩下的那20%的场景。下面对使用 <code>Newtonsoft.Json</code> 的自定义json序列化进行介绍。</p>
 <span id="more"></span>
 
-<p>使用数据库缓存的场景一般可以分为读操作和写操作。</p>
-<ul>
-<li><strong>读操作</strong>：<ul>
-<li>命中缓存(cache hit)：当客户端从缓存中读取到数据时，可以直接返回。</li>
-<li>未命中缓存(cache miss)：当读取的数据不在缓存时，需要从数据库中读取数据并写入缓存。</li>
-<li><strong>缓存的命中率</strong> &#x3D; 命中缓存请求个数&#x2F;总缓存访问请求个数 &#x3D; hit &#x2F; (hit+miss)，缓存的命中率是衡量缓存效果的重要指标，命中率越大，对后端数据库的压力越小。</li>
-</ul>
-</li>
-<li><strong>写操作</strong>：<ul>
-<li>缓存与数据库中的数据都需要被修改，因为要涉及缓存和数据库两个点的数据修改，且无法满足原子性，需要重点考虑数据一致性的问题，这也是数据库缓存使用的难点和重点。</li>
-</ul>
-</li>
-</ul>
-<h3 id="常见的解决方案"><a href="#常见的解决方案" class="headerlink" title="常见的解决方案"></a>常见的解决方案</h3><h4 id="先更新缓存，再更新数据库"><a href="#先更新缓存，再更新数据库" class="headerlink" title="先更新缓存，再更新数据库"></a>先更新缓存，再更新数据库</h4><ul>
-<li>我们先来分析一下此种方案的问题<ul>
-<li>初始缓存为0，数据库为0，A更新缓存为1</li>
-<li>A更新数据库失败，此时数据库中数据为0，缓存中数据为0</li>
-<li>出现脏数据情况</li>
-</ul>
-</li>
-</ul>
-<p><strong>异步回写</strong>：在处理写请求的时候，先只更新缓存，对于数据库的更新是使用批量异步更新的方式去处理的，这种方式，由于前面的更新操作只发生在缓存中，因此对于缓存的高可用要求比较高，但由于读写操作都在缓存中处理，大大提升了响应速度</p>
-<ul>
-<li>使用场景<br>比较适用于写入较多的极端场景，例如：电商秒杀系统</li>
-</ul>
-<h4 id="先更新数据库，再更新缓存"><a href="#先更新数据库，再更新缓存" class="headerlink" title="先更新数据库，再更新缓存"></a>先更新数据库，再更新缓存</h4><ul>
-<li>分析一下此种方案的问题<ul>
-<li>初始缓存为0，数据库为0</li>
-<li>A请求更新数据，更新数据库中数据为1</li>
-<li>B请求更新数据，更新数据库中数据为2，此时数据库中数据为2</li>
-<li>B更新缓存中数据为2，A由于网络延迟此时才更新缓存中的数据，更新缓存中数据为1</li>
-<li>出现数据库与缓存不一致情况</li>
-</ul>
-</li>
-<li>更新缓存失败也会造成数据库与缓存不一致情况出现</li>
-</ul>
-<p><strong>直写模式</strong>：这种模式优点在于读请求过程十分简单，不需要进行数据库查询操作，不管是先更新数据库，再更新缓存，还是先更新缓存再更新数据库，都会由于线程竞争原因出现数据库与缓存不一致的情况。</p>
-<p><strong>解决方案</strong>：可以将数据库更新与缓存的更新放在同一个事务中处理，线程竞争导致的不一致情况通过分布式锁解决，保证对缓存和数据库的操作仅能由同一个线程完成。对于没有拿到锁的线程，一是通过锁的timeout时间进行控制，二是将请求暂存在消息队列中顺序消费。</p>
-<ul>
-<li>使用场景<br>适合写操作较多，并且对一致性要求较高的场景</li>
-</ul>
-<p>上述两种方案，都是去更新缓存，主要是为了写操作较多的场景，针对于读操作较多的场景，可以使用删除缓存的形式去处理，这样处理的好处</p>
-<ul>
-<li>性能方面：假设缓存不是从数据库中读取出后就直接写进去的，而是需要复杂的计算后才能得出需要写入缓存的结果，此时每次更新数据的操作都去更新缓存在不需要读取该缓存的时候是不必要的，我们可以删除缓存，在读操作的时候再进行缓存的写入，这样可以大大提高性能。</li>
-<li><code>分析：</code>删除与更新在实际上的区别就是一次cache  miss</li>
-</ul>
-<h3 id="先删除缓存，再写入数据库"><a href="#先删除缓存，再写入数据库" class="headerlink" title="先删除缓存，再写入数据库"></a>先删除缓存，再写入数据库</h3><ul>
-<li>分析一下此种方案的问题<ul>
-<li>初始数据库中为0，缓存中为0</li>
-<li>A删除缓存，在A还未更新数据库时B请求读数据，缓存中无数据，从数据库中读取0，并写入缓存中</li>
-<li>A更新数据库为1，此时缓存中为0，数据库中为1，出现数据库与缓存不一致情况</li>
-</ul>
-</li>
-</ul>
-<p><strong>解决方案</strong>：使用延时删除策略，即更新数据库后再对缓存进行删除操作，延时时间根据读操作并写缓存的耗时决定</p>
-<p><code>疑问</code>：延时双删与先更新数据库后删除缓存的区别以及优势在哪</p>
-<p>个人理解：延时双删由于先删除缓存中的数据，可以保证在删除缓存与更新数据库的过程中一定获取的为最新的数据。同时对于先更新数据库再更新缓存中必出现的短暂缓存不一致情况，此时延时双删这阶段出现缓存不一致概率会有所降低。</p>
-<p>但是由于我们讨论的场景为高并发的场景下，在读操作比较多的时候，在删除缓存与更新数据库间出现数据查询的概率还是很高的，因此此时延时双删的方案的问题就又变回了先更新再删除缓存的问题。同时也引入了延时的时间确定性麻烦，不建议盲目使用延时双删策略</p>
-<h3 id="先更新数据库，再删除缓存"><a href="#先更新数据库，再删除缓存" class="headerlink" title="先更新数据库，再删除缓存"></a>先更新数据库，再删除缓存</h3><ul>
-<li>分析一下此种方案的问题<ul>
-<li>初始数据库中为0，缓存中为0</li>
-<li>A更新数据库为1，此时B查询缓存为0，但数据库为1，出现数据库与缓存不一致情况</li>
-<li>A删除缓存失败，也会出现不一致情况</li>
-</ul>
-</li>
-</ul>
-<p>此方案中更新数据库与删除缓存的短暂数据库不一致情况可忽略，主要处理删除缓存失败的情况</p>
-<p><strong>解决方案</strong>：主要是针对上述删除缓存失败的情况，为此使用补偿机制</p>
-<ul>
-<li>添加删除重试机制<br>使用消息队列的形式去处理。将删除失败的缓存对应的key放入消息队列中，在对应的消费者中获取删除失败的key，异步重试删除。这种方式对代码有侵入性</li>
-<li>基于数据库日志（MySQL binlog）增量解析、订阅和消费</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从上述分析来看，不管哪种方式可能都存在一定的不一致情况出现，需要针对不同的场景进行不同的设计，同时在缓存的处理上面可以使用分布式锁的机制去处理，也可以避免缓存不一致情况，但是此种方式会影响系统的吞吐量，在使用缓存的时候要使用过期时间去处理。</p>
-<p>在读多写少的场景中，建议使用先更新数据库，再删除缓存的方式进行处理，再写多且对数据一致性要求比较高的场景中，可以使用先更新数据库，再更新缓存的方式处理，面对一些极端写场景，可以使用先更新缓存，然后异步写入数据库的方式处理。</p>
+<h2 id="自定义Json序列化"><a href="#自定义Json序列化" class="headerlink" title="自定义Json序列化"></a>自定义Json序列化</h2><p>在介绍自定义序列化前，先对 <code>Newtonsoft.Json</code> 中的几个自带特性进行介绍</p>
+<h3 id="特性介绍"><a href="#特性介绍" class="headerlink" title="特性介绍"></a>特性介绍</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[JsonIgnore]</span><br><span class="line">该特性可以忽略序列化某个实体类字段</span><br><span class="line"></span><br><span class="line">[JsonProperty(<span class="string">&quot;Font&quot;</span>)]</span><br><span class="line">用于设置序列化到json中的实际名称</span><br></pre></td></tr></table></figure>
+
+<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><p>在自定义序列的时候我们需要实现一个converter继承自 <code>Newtonsoft.Json</code> 中的 <code>JsonConvert</code> ，并实现其中的方法，实现方法前我们需要了解需要实现方法的作用</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">JsonConverter</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">JsonConverter</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//是否开启自定义反序列化，值为true时，反序列化时会走ReadJson方法，值为false时，不走ReadJson方法，而是默认的反序列化</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> CanRead &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//是否开启自定义序列化，值为true时，序列化时会走WriteJson方法，值为false时，不走WriteJson方法，而是默认的序列化</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> CanWrite &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//能否对某类型进行序列化和反序列化，为true时，匹配该类型，值为false时，不匹配该类型</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="built_in">bool</span> <span class="title">CanConvert</span>(<span class="params">Type objectType</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自定义反序列化方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="built_in">object</span> <span class="title">ReadJson</span>(<span class="params">JsonReader reader, Type objectType, <span class="built_in">object</span> existingValue, JsonSerializer serializer</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自定义序列化</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">WriteJson</span>(<span class="params">JsonWriter writer, <span class="built_in">object</span> <span class="keyword">value</span>, JsonSerializer serializer</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>通过了解上述类中方法的作用，我们在自定义序列化的时候需要 <code>CanRead</code> 属性为true，且实现 <code>CanConvert()</code>判断指定类型，同时需要实现 <code>WriteJson()</code>方法作为实际自定义输出，下面通过两个简单的例子进行介绍实际使用</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>首先交代一下使用的类</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Model</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Model</span>(<span class="params"><span class="built_in">int</span> id, <span class="built_in">string</span> name, <span class="built_in">int</span> age, DateTime createTime</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        CreateTime = createTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> id &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> age &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> DateTime CreateTime &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>初始化一个类</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">Model model = <span class="keyword">new</span> Model(<span class="number">1</span>, <span class="string">&quot;tony&quot;</span>, <span class="number">22</span>, DateTime.Now);</span><br></pre></td></tr></table></figure>
+
+<p>现在使用自带的序列化方法序列化结果如下</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;id&quot;</span><span class="punctuation">:</span><span class="number">1</span><span class="punctuation">,</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;tony&quot;</span><span class="punctuation">,</span><span class="attr">&quot;age&quot;</span><span class="punctuation">:</span><span class="number">22</span><span class="punctuation">,</span><span class="attr">&quot;CreateTime&quot;</span><span class="punctuation">:</span><span class="string">&quot;2022-11-09T14:40:04.1560759+08:00&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到此时 <code>CreateTime</code> 字段采用了默认的初始化,若此时我们需要将此字段序列化为时间戳的形式，我们需要如何处理呢？</p>
+<p>实现一个converter继承自 <code>Newtonsoft.Json</code> 中的 <code>JsonConvert</code></p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DateTimeConverter</span> : <span class="title">JsonConverter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> CanRead &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> CanWrite &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> <span class="literal">true</span>; &#125; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">CanConvert</span>(<span class="params">Type objectType</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> objectType == <span class="keyword">typeof</span>(DateTime);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">object</span> <span class="title">ReadJson</span>(<span class="params">JsonReader reader, Type objectType, <span class="built_in">object</span> existingValue, JsonSerializer serializer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">WriteJson</span>(<span class="params">JsonWriter writer, <span class="built_in">object</span> <span class="keyword">value</span>, JsonSerializer serializer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        TimeSpan ts = ((DateTime)<span class="keyword">value</span>) - <span class="keyword">new</span> DateTime(<span class="number">1970</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">string</span> convertTime = Convert.ToInt64(ts.TotalSeconds).ToString();</span><br><span class="line">        writer.WriteValue(convertTime);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另：此处仅介绍序列化内容，因此该类中 <code>ReadJson()</code> 方法未实现 </p>
+<p>此时序列化时，将自定义的转换器作为参数传到序列化方法中</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Formatting.Indented用于格式化json</span></span><br><span class="line">JsonConvert.SerializeObject(model,Formatting.Indented,<span class="keyword">new</span> DateTimeConverter())</span><br></pre></td></tr></table></figure>
+
+<p>此时输出结果为</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tony&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">22</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;CreateTime&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1668004835&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，此时DateTime类型的字段已经被序列化为时间戳形式</p>
+<p>若此时我们需要将id作为序列化的key，其他的属性作为value，该如何处理呢？</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;1&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;tony&quot;</span>,</span><br><span class="line">  <span class="string">&quot;age&quot;</span>: <span class="number">22</span>,</span><br><span class="line">  <span class="string">&quot;CreateTime&quot;</span>: <span class="string">&quot;1668004861&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外实现一个转换器</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">ModelConverter</span>:<span class="title">JsonConverter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> CanRead &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> CanWrite &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> <span class="literal">true</span>; &#125; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">CanConvert</span>(<span class="params">Type objectType</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> objectType == <span class="keyword">typeof</span>(Model);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">object</span> <span class="title">ReadJson</span>(<span class="params">JsonReader reader, Type objectType, <span class="built_in">object</span> existingValue, JsonSerializer serializer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">WriteJson</span>(<span class="params">JsonWriter writer, <span class="built_in">object</span> <span class="keyword">value</span>, JsonSerializer serializer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> model = <span class="keyword">value</span> <span class="keyword">as</span> Model;</span><br><span class="line">        <span class="keyword">if</span> (model == <span class="literal">null</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        writer.WriteStartObject();</span><br><span class="line">        writer.WritePropertyName(model.id.ToString());</span><br><span class="line">        <span class="comment">//此处时间仍然转化为时间戳的形式</span></span><br><span class="line">        writer.WriteRawValue(JsonConvert.SerializeObject(<span class="keyword">new</span> &#123; name=model.name,age=model.age,CreateTime=model.CreateTime&#125;, Formatting.Indented, <span class="keyword">new</span> DateTimeConverter()));</span><br><span class="line">        writer.WriteEndObject();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以使用特性的方式处理，在Model上加上特性,该类型在序列化的时候会将该转换器加入到可用转换器中</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[JsonConverter(typeof(ModelConverter))]</span><br></pre></td></tr></table></figure>
+
+<p>也可以用上面的方式实现自定义转换器的调用</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">JsonConvert.SerializeObject(model,Formatting.Indented,<span class="keyword">new</span> ModelConverter())</span><br></pre></td></tr></table></figure>
+
+<p>实际开发中，可根据实际业务场景去定义所需转换器</p>
 ]]></content>
       <categories>
-        <category>微服务</category>
+        <category>NetCore</category>
       </categories>
       <tags>
-        <tag>一致性问题</tag>
+        <tag>Json</tag>
       </tags>
   </entry>
   <entry>
@@ -801,6 +769,94 @@
       </categories>
       <tags>
         <tag>测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>高并发下的数据库与缓存一致性问题</title>
+    <url>/2022/10/27/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>在互联网业务中，传统的直接访问数据库方式，主要是通过数据分片，一写多读的方式去抗住数据流量，但是随着数据量的激增，并且大多数都是读多写少的场景 ，仅仅依靠数据库查询，成本高，效率低，且稳定性远远不够。因此，在架构设计中，常采用增加缓存层来提高系统的响应能力，提升数据读写性能、减少数据库访问压力，从而提升业务的稳定性和访问体验。<br>引入缓存又带来了新的问题，那就是数据库与缓存一致性的问题，该问题不局限于语言，是个公共问题，尤其在高并发的情况下很容易出现该问题。</p>
+<span id="more"></span>
+
+<p>使用数据库缓存的场景一般可以分为读操作和写操作。</p>
+<ul>
+<li><strong>读操作</strong>：<ul>
+<li>命中缓存(cache hit)：当客户端从缓存中读取到数据时，可以直接返回。</li>
+<li>未命中缓存(cache miss)：当读取的数据不在缓存时，需要从数据库中读取数据并写入缓存。</li>
+<li><strong>缓存的命中率</strong> &#x3D; 命中缓存请求个数&#x2F;总缓存访问请求个数 &#x3D; hit &#x2F; (hit+miss)，缓存的命中率是衡量缓存效果的重要指标，命中率越大，对后端数据库的压力越小。</li>
+</ul>
+</li>
+<li><strong>写操作</strong>：<ul>
+<li>缓存与数据库中的数据都需要被修改，因为要涉及缓存和数据库两个点的数据修改，且无法满足原子性，需要重点考虑数据一致性的问题，这也是数据库缓存使用的难点和重点。</li>
+</ul>
+</li>
+</ul>
+<h3 id="常见的解决方案"><a href="#常见的解决方案" class="headerlink" title="常见的解决方案"></a>常见的解决方案</h3><h4 id="先更新缓存，再更新数据库"><a href="#先更新缓存，再更新数据库" class="headerlink" title="先更新缓存，再更新数据库"></a>先更新缓存，再更新数据库</h4><ul>
+<li>我们先来分析一下此种方案的问题<ul>
+<li>初始缓存为0，数据库为0，A更新缓存为1</li>
+<li>A更新数据库失败，此时数据库中数据为0，缓存中数据为0</li>
+<li>出现脏数据情况</li>
+</ul>
+</li>
+</ul>
+<p><strong>异步回写</strong>：在处理写请求的时候，先只更新缓存，对于数据库的更新是使用批量异步更新的方式去处理的，这种方式，由于前面的更新操作只发生在缓存中，因此对于缓存的高可用要求比较高，但由于读写操作都在缓存中处理，大大提升了响应速度</p>
+<ul>
+<li>使用场景<br>比较适用于写入较多的极端场景，例如：电商秒杀系统</li>
+</ul>
+<h4 id="先更新数据库，再更新缓存"><a href="#先更新数据库，再更新缓存" class="headerlink" title="先更新数据库，再更新缓存"></a>先更新数据库，再更新缓存</h4><ul>
+<li>分析一下此种方案的问题<ul>
+<li>初始缓存为0，数据库为0</li>
+<li>A请求更新数据，更新数据库中数据为1</li>
+<li>B请求更新数据，更新数据库中数据为2，此时数据库中数据为2</li>
+<li>B更新缓存中数据为2，A由于网络延迟此时才更新缓存中的数据，更新缓存中数据为1</li>
+<li>出现数据库与缓存不一致情况</li>
+</ul>
+</li>
+<li>更新缓存失败也会造成数据库与缓存不一致情况出现</li>
+</ul>
+<p><strong>直写模式</strong>：这种模式优点在于读请求过程十分简单，不需要进行数据库查询操作，不管是先更新数据库，再更新缓存，还是先更新缓存再更新数据库，都会由于线程竞争原因出现数据库与缓存不一致的情况。</p>
+<p><strong>解决方案</strong>：可以将数据库更新与缓存的更新放在同一个事务中处理，线程竞争导致的不一致情况通过分布式锁解决，保证对缓存和数据库的操作仅能由同一个线程完成。对于没有拿到锁的线程，一是通过锁的timeout时间进行控制，二是将请求暂存在消息队列中顺序消费。</p>
+<ul>
+<li>使用场景<br>适合写操作较多，并且对一致性要求较高的场景</li>
+</ul>
+<p>上述两种方案，都是去更新缓存，主要是为了写操作较多的场景，针对于读操作较多的场景，可以使用删除缓存的形式去处理，这样处理的好处</p>
+<ul>
+<li>性能方面：假设缓存不是从数据库中读取出后就直接写进去的，而是需要复杂的计算后才能得出需要写入缓存的结果，此时每次更新数据的操作都去更新缓存在不需要读取该缓存的时候是不必要的，我们可以删除缓存，在读操作的时候再进行缓存的写入，这样可以大大提高性能。</li>
+<li><code>分析：</code>删除与更新在实际上的区别就是一次cache  miss</li>
+</ul>
+<h3 id="先删除缓存，再写入数据库"><a href="#先删除缓存，再写入数据库" class="headerlink" title="先删除缓存，再写入数据库"></a>先删除缓存，再写入数据库</h3><ul>
+<li>分析一下此种方案的问题<ul>
+<li>初始数据库中为0，缓存中为0</li>
+<li>A删除缓存，在A还未更新数据库时B请求读数据，缓存中无数据，从数据库中读取0，并写入缓存中</li>
+<li>A更新数据库为1，此时缓存中为0，数据库中为1，出现数据库与缓存不一致情况</li>
+</ul>
+</li>
+</ul>
+<p><strong>解决方案</strong>：使用延时删除策略，即更新数据库后再对缓存进行删除操作，延时时间根据读操作并写缓存的耗时决定</p>
+<p><code>疑问</code>：延时双删与先更新数据库后删除缓存的区别以及优势在哪</p>
+<p>个人理解：延时双删由于先删除缓存中的数据，可以保证在删除缓存与更新数据库的过程中一定获取的为最新的数据。同时对于先更新数据库再更新缓存中必出现的短暂缓存不一致情况，此时延时双删这阶段出现缓存不一致概率会有所降低。</p>
+<p>但是由于我们讨论的场景为高并发的场景下，在读操作比较多的时候，在删除缓存与更新数据库间出现数据查询的概率还是很高的，因此此时延时双删的方案的问题就又变回了先更新再删除缓存的问题。同时也引入了延时的时间确定性麻烦，不建议盲目使用延时双删策略</p>
+<h3 id="先更新数据库，再删除缓存"><a href="#先更新数据库，再删除缓存" class="headerlink" title="先更新数据库，再删除缓存"></a>先更新数据库，再删除缓存</h3><ul>
+<li>分析一下此种方案的问题<ul>
+<li>初始数据库中为0，缓存中为0</li>
+<li>A更新数据库为1，此时B查询缓存为0，但数据库为1，出现数据库与缓存不一致情况</li>
+<li>A删除缓存失败，也会出现不一致情况</li>
+</ul>
+</li>
+</ul>
+<p>此方案中更新数据库与删除缓存的短暂数据库不一致情况可忽略，主要处理删除缓存失败的情况</p>
+<p><strong>解决方案</strong>：主要是针对上述删除缓存失败的情况，为此使用补偿机制</p>
+<ul>
+<li>添加删除重试机制<br>使用消息队列的形式去处理。将删除失败的缓存对应的key放入消息队列中，在对应的消费者中获取删除失败的key，异步重试删除。这种方式对代码有侵入性</li>
+<li>基于数据库日志（MySQL binlog）增量解析、订阅和消费</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从上述分析来看，不管哪种方式可能都存在一定的不一致情况出现，需要针对不同的场景进行不同的设计，同时在缓存的处理上面可以使用分布式锁的机制去处理，也可以避免缓存不一致情况，但是此种方式会影响系统的吞吐量，在使用缓存的时候要使用过期时间去处理。</p>
+<p>在读多写少的场景中，建议使用先更新数据库，再删除缓存的方式进行处理，再写多且对数据一致性要求比较高的场景中，可以使用先更新数据库，再更新缓存的方式处理，面对一些极端写场景，可以使用先更新缓存，然后异步写入数据库的方式处理。</p>
+]]></content>
+      <categories>
+        <category>微服务</category>
+      </categories>
+      <tags>
+        <tag>一致性问题</tag>
       </tags>
   </entry>
 </search>
